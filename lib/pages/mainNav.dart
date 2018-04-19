@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bibliotech/config.dart' as config;
+import 'package:bibliotech/pages/bookList.dart';
 
 class MainNav extends StatefulWidget {
   @override
@@ -8,30 +10,24 @@ class MainNav extends StatefulWidget {
 }
 
 class MainNavState extends State<MainNav> {
-    /// This controller can be used to programmatically
-  /// set the current displayed page
+  // This controller can be used to programmatically set the current displayed page
   PageController _pageController;
 
-  /// Indicating the current displayed page
-  /// 0: trends
-  /// 1: feed
-  /// 2: community
   int _page = 0;
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Bibliotech"),
+        title: new Text("Bibliotech: ${config.schoolName}"),
       ),
       body: new PageView(
         children: [
-          new Container(color: Colors.red),
+          new BookList(),
           new Container(color: Colors.blue),
           new Container(color: Colors.grey)
         ],
-
-        /// Specify the page controller
+        // Specify the page controller
         controller: _pageController,
         onPageChanged: onPageChanged
       ),
@@ -59,13 +55,12 @@ class MainNavState extends State<MainNav> {
     );
   }
 
-  /// Called when the user presses on of the
-  /// [BottomNavigationBarItem] with corresponding
-  /// page index
+  // Called when the user presses on of the
+  // [BottomNavigationBarItem] with corresponding
+  // page index
   void navigationTapped(int page){
 
     // Animating to the page.
-    // You can use whatever duration and curve you like
     _pageController.animateToPage(
         page,
         duration: const Duration(milliseconds: 300),

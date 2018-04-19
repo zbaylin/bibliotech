@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bibliotech/pages/mainNav.dart';
+import 'package:bibliotech/pages/loading.dart';
 
 void main() => runApp(new MyApp());
 
@@ -17,9 +17,12 @@ class MyApp extends StatelessWidget {
         // "hot reload" (press "r" in the console where you ran "flutter run",
         // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
         // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.deepOrange,
+        primaryIconTheme: new IconThemeData(
+          color: Colors.lime
+        )
       ),
-      home: new MainNav(),
+      home: new LoadingScreen(),
     );
   }
 }

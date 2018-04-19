@@ -1,0 +1,7 @@
+# This is to help individual teachers/media specialists configure it to their needs
+
+# School name to be used throughout the app
+school_name: "North Springs"
+
+# Address to a Bibliotech server
+hostname: "http://104.128.224.237"

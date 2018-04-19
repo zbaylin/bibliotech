@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:bibliotech/components/bookItem.dart';
+import 'package:bibliotech/routes/books.dart';
+import 'package:bibliotech/models/book.dart';
+
+class BookList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new BookListState();
+  } 
+}
+
+class BookListState extends State<BookList> {
+
+
+  Widget buildListOfBooks(List bookList) {
+    int counter = 0;
+    List widgetList = [];
+    List rowList = [];
+    bookList.map((book) {
+      if (counter.isOdd) {
+        rowList.add(new BookItem(book));
+        widgetList.add(new Row(children: rowList));
+        rowList.clear();
+      } else {
+        rowList.add(new BookItem(book));
+      }
+      counter = counter + 1;
+    });
+    return new ListView(
+      children: widgetList,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new FutureBuilder(
+      future: getAllBooks(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.active:
+          case ConnectionState.waiting:
+            return new Center(child: new CircularProgressIndicator());
+            break;
+          default:
+            if (snapshot.hasError) {
+              return new Text("Error!");
+            } else {
+              return new FutureBuilder(
+                future: snapshot.data.toList(),
+                builder: (context, listSnapshot) {
+                  switch (listSnapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.active:
+                    case ConnectionState.waiting:
+                      return new Center(child: new CircularProgressIndicator());
+                      break;
+                    case ConnectionState.done:
+                      return new GridView.count(
+                        crossAxisCount: 2,
+                        children: listSnapshot.data.map<Widget>(
+                          (book) => new BookItem(book)
+                        ).toList()
+                      );
+                    }
+                },
+              );
+            }
+        }
+      }
+    );
+  }
+}
