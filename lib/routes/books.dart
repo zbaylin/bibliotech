@@ -14,7 +14,6 @@ main() async {
 
 Future<Stream<Book>> getAllBooks() async {
   var client = new http.Client();
-  print(config.hostname);
   var uri = Uri.parse(config.hostname + "/books");
   var request = new http.Request('get', uri);
 
@@ -25,4 +24,11 @@ Future<Stream<Book>> getAllBooks() async {
     .transform(JSON.decoder)
     .expand((jsonBody) => (jsonBody as Map)['books'])
     .map((jsonBook) => new Book.fromJson(jsonBook));
+}
+
+Future<Map> getFromGoogleBooks(Book book) async {
+  final response = await http.get("https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}");
+  final json = JSON.decode(response.body);
+
+  return json;
 }

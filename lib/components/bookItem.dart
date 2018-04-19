@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bibliotech/models/book.dart';
 import 'package:bibliotech/config.dart' as config;
+import 'package:bibliotech/pages/bookInfo.dart';
 
 class BookItem extends StatelessWidget {
   BookItem(this.book);
@@ -39,7 +40,7 @@ class BookItem extends StatelessWidget {
               new Text("${book.numLeft.toString()} left in stock")
             ],
         ),
-        onPressed: () {print("tell");},
+        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new BookInfo(book)))
       )
     );
   }
