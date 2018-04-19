@@ -22,7 +22,7 @@ class BookItem extends StatelessWidget {
                 child: new Container(
                   child: new CachedNetworkImage(
                     imageUrl: "${config.hostname}/img/${book.isbn}",
-                    height: 100.0,
+                    height: MediaQuery.of(context).size.height/7,
                     placeholder: new CircularProgressIndicator(),
                   ),
                   decoration: new BoxDecoration(

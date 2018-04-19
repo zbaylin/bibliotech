@@ -9,3 +9,4 @@ library bibliotech.config;
 String apiKey;  
 String schoolName;
 String hostname;
+String username;

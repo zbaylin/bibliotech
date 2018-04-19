@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bibliotech/pages/loading.dart';
+import 'package:bibliotech/pages/login.dart';
 
 void main() => runApp(new MyApp());
 
@@ -8,6 +9,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Bibliotech',
+      routes: {
+        '/LogInPage': (BuildContext context) => new LogInPage()
+      },
       theme: new ThemeData(
         // This is the theme of your application.
         //
@@ -18,9 +22,6 @@ class MyApp extends StatelessWidget {
         // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.deepOrange,
-        primaryIconTheme: new IconThemeData(
-          color: Colors.lime
-        )
       ),
       home: new LoadingScreen(),
     );
