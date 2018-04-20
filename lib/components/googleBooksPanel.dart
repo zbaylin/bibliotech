@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:bibliotech/routes/books.dart';
 import 'package:bibliotech/models/book.dart';
 
@@ -47,8 +48,42 @@ class GoogleBooksPanelState extends State<GoogleBooksPanel> {
                     )),
                   ),
                   new Text("Description",  textAlign: TextAlign.start, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
-                  new Text(apiResponse['volumeInfo']['description'], maxLines: 12, overflow: TextOverflow.ellipsis,),
+                  (apiResponse['volumeInfo']['description'] == null
+                  ? new Text("None found")
+                  : new Text(apiResponse['volumeInfo']['description'], maxLines: 12, overflow: TextOverflow.ellipsis,)),
                   new Divider(),
+                  new Text("Genre(s)",  textAlign: TextAlign.start, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
+                  (apiResponse['volumeInfo']['categories'] == null
+                  ? new Center(child: new Container(
+                      child: new Text("N/A"),
+                      // Creates the background
+                      padding: EdgeInsets.all(6.0),
+                      decoration: new BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(40.0)
+                      ),
+                    ))
+                  : new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: apiResponse['volumeInfo']['categories'].map<Widget>(
+                      (category) => new Container(
+                        child: new Text(category),
+                        // Creates the background
+                        padding: EdgeInsets.all(6.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(40.0)
+                        ),
+                      )
+                    ).toList(),
+                  )),
+                  new Container(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: new FlatButton(
+                      child: new Text("MORE INFO", style: new TextStyle(color: Theme.of(context).primaryColor)),
+                      onPressed: () => launch(apiResponse['volumeInfo']['infoLink']),
+                    ),
+                  )
                 ],
               ),
             );

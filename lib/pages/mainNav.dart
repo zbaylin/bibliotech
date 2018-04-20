@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/pages/bookList.dart';
+import 'package:bibliotech/utils/user.dart' as user;
 
 class MainNav extends StatefulWidget {
   @override
@@ -9,6 +10,8 @@ class MainNav extends StatefulWidget {
   }
 }
 
+
+enum MenuAction {LogOut}
 class MainNavState extends State<MainNav> {
   // This controller can be used to programmatically set the current displayed page
   PageController _pageController;
@@ -20,6 +23,25 @@ class MainNavState extends State<MainNav> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Bibliotech: ${config.schoolName}"),
+        actions: <Widget>[
+          new PopupMenuButton<MenuAction>(
+            onSelected: (MenuAction result) {
+              switch (result) {
+                case MenuAction.LogOut:
+                  user.logOut();
+                  Navigator.of(context).pushReplacementNamed('/LogInPage');
+                  break;
+                default:
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem<MenuAction>(
+                value: MenuAction.LogOut,
+                child: const Text("Log Out"),
+              )
+            ]
+          )
+        ],
       ),
       body: new PageView(
         children: [
