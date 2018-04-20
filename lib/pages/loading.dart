@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import "package:yaml/yaml.dart";
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:bibliotech/config.dart' as config;
@@ -21,7 +20,7 @@ class LoadingScreenState extends State<LoadingScreen> {
   }
 
   // This stores all the config fields in memory
-  // Allows for quick config references
+  // Faster than reading in the YAML config file each time
   cacheConfig() async {
     String yamlString = await rootBundle.loadString('config.yaml');
     Map yaml = loadYaml(yamlString);
@@ -30,14 +29,14 @@ class LoadingScreenState extends State<LoadingScreen> {
     onDone();
   }
 
-  // Once the caching is over, it switches the main widget to the Main Navigator
+  // Once the caching is over, navigate the app page to the Main Navigator
   onDone() async {
     Navigator.pushReplacement(context, new MaterialPageRoute(builder:(context) => new MainNav()));
   }
 
   @override
   Widget build(BuildContext context) {
-
+    // Implement a spinning progress bar to keep the user's attention
     return new Container(
       color: Colors.white,
       child: new Center(

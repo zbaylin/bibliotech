@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bibliotech/components/bookItem.dart';
 import 'package:bibliotech/routes/books.dart';
-import 'package:bibliotech/models/book.dart';
 
 class BookList extends StatefulWidget {
   @override
@@ -11,8 +10,10 @@ class BookList extends StatefulWidget {
 }
 
 class BookListState extends State<BookList> {
-
-
+  // Take a list of books and transform it into a ListView
+  // This transformation takes pairs of books, using their
+  // parity (odd or even) to determine whether they should
+  // go on the left side or right side of the screen
   Widget buildListOfBooks(List bookList) {
     int counter = 0;
     List widgetList = [];
@@ -28,7 +29,7 @@ class BookListState extends State<BookList> {
       counter = counter + 1;
     });
     return new ListView(
-      children: widgetList,
+      children: widgetList
     );
   }
 
@@ -50,11 +51,6 @@ class BookListState extends State<BookList> {
                 future: snapshot.data.toList(),
                 builder: (context, listSnapshot) {
                   switch (listSnapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.active:
-                    case ConnectionState.waiting:
-                      return new Center(child: new CircularProgressIndicator());
-                      break;
                     case ConnectionState.done:
                       return new GridView.count(
                         crossAxisCount: 2,
@@ -62,8 +58,10 @@ class BookListState extends State<BookList> {
                           (book) => new BookItem(book)
                         ).toList()
                       );
+                    default:
+                      return new Center(child: new CircularProgressIndicator());
                     }
-                },
+                }
               );
             }
         }
