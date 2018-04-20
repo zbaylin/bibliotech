@@ -53,19 +53,43 @@ class BookInfoState extends State<BookInfo> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    new FlatButton(
-                      child: new Column(
-                        children: <Widget>[
-                          new Icon(Icons.call_made, color: Theme.of(context).primaryColor, size: 30.0,),
-                          new Text("Check Out", style: new TextStyle(color: Theme.of(context).primaryColor))
-                        ],
-                      ),
-                      onPressed: () async {
-                        final snackbarText = await checkOut(book);
-                        Scaffold.of(context).showSnackBar(new SnackBar(
-                          content: new Text(snackbarText)
-                        ));
-                      }
+                    new FutureBuilder(
+                      future: doIHave(book),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                          case ConnectionState.active:
+                          case ConnectionState.waiting:
+                            return new CircularProgressIndicator();
+                            break;
+                          default:
+                            if (snapshot.data) {
+                              return new FlatButton(
+                                child: new Column(
+                                  children: <Widget>[
+                                    new Icon(Icons.call_made, color: Theme.of(context).primaryColor, size: 30.0,),
+                                    new Text("Check In", style: new TextStyle(color: Theme.of(context).primaryColor))
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return new FlatButton(
+                                child: new Column(
+                                  children: <Widget>[
+                                    new Icon(Icons.call_made, color: Theme.of(context).primaryColor, size: 30.0,),
+                                    new Text("Check Out", style: new TextStyle(color: Theme.of(context).primaryColor))
+                                  ],
+                                ),
+                                onPressed: () async {
+                                  final snackbarText = await checkOut(book);
+                                  Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text(snackbarText)
+                                  ));
+                                }
+                              );
+                            }
+                        }
+                      },
                     ),
                     new FlatButton(
                       child: new Column(

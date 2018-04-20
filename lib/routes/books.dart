@@ -45,6 +45,12 @@ Future<Map> getFromGoogleBooks(Book book) async {
   return json;
 }
 
+Future<bool> doIHave(Book book) async {
+  final response = await http.get("${config.hostname}/user/${config.username}/has/${book.isbn}");
+  final json = JSON.decode(response.body);
+  return json['has'];
+}
+
 Future<String> checkOut(Book book) async {
   final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/checkOutFor/${config.username}");
   if (response.statusCode == 200) {
