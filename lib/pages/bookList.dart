@@ -40,11 +40,14 @@ class BookListState extends State<BookList> {
                 builder: (context, listSnapshot) {
                   switch (listSnapshot.connectionState) {
                     case ConnectionState.done:
-                      return new GridView.count(
-                        crossAxisCount: 2,
-                        children: listSnapshot.data.map<Widget>(
-                          (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
-                        ).toList()
+                      return new RefreshIndicator(
+                        onRefresh: () {onRefresh(context);},
+                        child: new GridView.count(
+                          crossAxisCount: 2,
+                          children: listSnapshot.data.map<Widget>(
+                            (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
+                          ).toList()
+                        ),
                       );
                     default:
                       return new Center(child: new CircularProgressIndicator());
@@ -55,5 +58,10 @@ class BookListState extends State<BookList> {
         }
       }
     );
+  }
+
+  onRefresh(BuildContext context) async {
+    setState(() {});
+    Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("List refreshed"),));
   }
 }
