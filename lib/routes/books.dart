@@ -68,3 +68,12 @@ Future<String> checkIn(Book book) async {
     return "Couldn't check in ${book.title}: ${response.reasonPhrase}!";
   }
 }
+
+Future<String> reserve(Book book) async {
+  final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/reserveFor/${config.username}");
+  if (response.statusCode == 200) {
+    return "Successfully reserved ${book.title}!";
+  } else {
+    return "Couldn't reserve ${book.title}: ${response.reasonPhrase}!";
+  }
+}
