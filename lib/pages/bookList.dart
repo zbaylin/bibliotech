@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:bibliotech/components/bookItem.dart';
 import 'package:bibliotech/routes/books.dart';
 
+enum BookListType {
+  SHELF,
+  LIBRARY
+}
+
 class BookList extends StatefulWidget {
+  BookList(this.listType);
+
+  final BookListType listType;
+
   @override
   State<StatefulWidget> createState() {
     return new BookListState();
@@ -10,33 +19,12 @@ class BookList extends StatefulWidget {
 }
 
 class BookListState extends State<BookList> {
-  // Take a list of books and transform it into a ListView
-  // This transformation takes pairs of books, using their
-  // parity (odd or even) to determine whether they should
-  // go on the left side or right side of the screen
-  Widget buildListOfBooks(List bookList) {
-    int counter = 0;
-    List widgetList = [];
-    List rowList = [];
-    bookList.map((book) {
-      if (counter.isOdd) {
-        rowList.add(new BookItem(book));
-        widgetList.add(new Row(children: rowList));
-        rowList.clear();
-      } else {
-        rowList.add(new BookItem(book));
-      }
-      counter = counter + 1;
-    });
-    return new ListView(
-      children: widgetList
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return new FutureBuilder(
-      future: getAllBooks(),
+      future: this.widget.listType == BookListType.LIBRARY
+              ? getAllBooks()
+              : getAllMyBooks(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.active:
@@ -55,7 +43,7 @@ class BookListState extends State<BookList> {
                       return new GridView.count(
                         crossAxisCount: 2,
                         children: listSnapshot.data.map<Widget>(
-                          (book) => new BookItem(book)
+                          (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
                         ).toList()
                       );
                     default:

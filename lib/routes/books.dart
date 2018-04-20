@@ -34,8 +34,18 @@ Future<Stream<Book>> getAllMyBooks() async {
   return response.stream
     .transform(UTF8.decoder)
     .transform(JSON.decoder)
-    .expand((jsonBody) => (jsonBody as Map)['books'])
-    .map((jsonBook) => new Book.fromJson(jsonBook));
+    .expand((jsonBody) => (jsonBody as Map)['checked_out'])
+    // Future<Stream<Book>>.asyncMap maps over the stream with a function that returns a Future<Book> and
+    // merges all the futures to return a Future<Stream<Book>> instead of a Future<Stream<Future<Book>>.
+    // This is equivalent to folding over the stream with .then() after each Future<Book> in the stream.
+    // Basically, this function allows us to request additional details about the book from the API before
+    // returning the stream of books to the user. This allows us to construct the full Book object from
+    // and endpoint that only returns the ISBN (but not the title, author, etc.).
+    .asyncMap((jsonBook) async {
+      final response = await http.get("${config.hostname}/books/byIsbn/${(jsonBook as Map)['isbn']}");
+      final json = JSON.decode(response.body);
+      return new Book.fromJson(json);
+    });
 }
 
 Future<Map> getFromGoogleBooks(Book book) async {

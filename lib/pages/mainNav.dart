@@ -3,6 +3,7 @@ import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/pages/bookList.dart';
 import 'package:bibliotech/utils/user.dart' as user;
 
+
 class MainNav extends StatefulWidget {
   @override
   MainNavState createState() {
@@ -45,9 +46,9 @@ class MainNavState extends State<MainNav> {
       ),
       body: new PageView(
         children: [
-          new BookList(),
-          new Container(color: Colors.blue),
-          new Container(color: Colors.grey)
+          new BookList(BookListType.LIBRARY),
+          new Container(color: Colors.grey),
+          new BookList(BookListType.SHELF)
         ],
         // Specify the page controller
         controller: _pageController,
