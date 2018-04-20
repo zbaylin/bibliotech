@@ -5,11 +5,9 @@ import 'dart:convert';
 import 'package:bibliotech/config.dart' as config;
 
 main() async {
-  List bookList = [];
   config.hostname = "http://localhost:9292";
   var books = await getAllBooks();
   books.listen((book) => print(book.isbn));
-
 }
 
 Future<Stream<Book>> getAllBooks() async {
@@ -31,4 +29,13 @@ Future<Map> getFromGoogleBooks(Book book) async {
   final json = JSON.decode(response.body);
 
   return json;
+}
+
+Future<String> checkOut(Book book) async {
+  final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/checkOutFor/${config.username}");
+  if (response.statusCode == 200) {
+    return "Successfully checked out ${book.title}!";
+  } else {
+    return "Couldn't check out ${book.title}: ${response.reasonPhrase}!";
+  }
 }

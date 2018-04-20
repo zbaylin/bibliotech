@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/pages/loading.dart';
 
 class LogInPage extends StatefulWidget {
