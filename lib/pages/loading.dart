@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -22,7 +21,7 @@ class LoadingScreenState extends State<LoadingScreen> {
     determineNext();
   }
 
-  //Determines the next page to go to based on the state of the config file
+  // Determines the next page to go to based on the state of the config file
   determineNext() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
 
@@ -36,7 +35,7 @@ class LoadingScreenState extends State<LoadingScreen> {
   }
 
   // This stores all the config fields in memory
-  // Allows for quick config references
+  // Faster than reading in the YAML config file each time
   cacheConfig() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     File configFile = new File("${appDocDir.path}/config.json");
@@ -48,7 +47,7 @@ class LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    // Implement a spinning progress bar to keep the user's attention
     return new Container(
       color: Colors.white,
       child: new Center(

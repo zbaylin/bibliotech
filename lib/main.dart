@@ -4,6 +4,7 @@ import 'package:bibliotech/pages/login.dart';
 
 void main() => runApp(new MyApp());
 
+// Declares the top widget in the hierarchy, informing it to use Material Design
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.deepOrange,
       ),
-      home: new LoadingScreen(),
+      // Start at the loading screen while we wait for the main app to load in
+      home: new LoadingScreen()
     );
   }
 }
