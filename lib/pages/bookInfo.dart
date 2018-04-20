@@ -53,10 +53,14 @@ class BookInfoState extends State<BookInfo> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
+                    // This is to determine whether or not the button is to check out or check in
                     new FutureBuilder(
+                      // Runs a server side query to determine if the user has the book
                       future: doIHave(book),
+                      // Takes a "snapshot" of the future
                       builder: (context, snapshot) {
                         switch (snapshot.connectionState) {
+                          // Determines the current state of the snapshot, and checks it against various criteria
                           case ConnectionState.none:
                           case ConnectionState.active:
                           case ConnectionState.waiting:
