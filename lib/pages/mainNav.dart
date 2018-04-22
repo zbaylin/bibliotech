@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/pages/bookList.dart';
 import 'package:bibliotech/utils/user.dart' as user;
+import 'package:bibliotech/pages/scan.dart';
 
 
 class MainNav extends StatefulWidget {
@@ -12,7 +13,7 @@ class MainNav extends StatefulWidget {
 }
 
 
-enum MenuAction {LogOut}
+enum MenuAction {LogOut, Scan}
 class MainNavState extends State<MainNav> {
   // This controller can be used to programmatically set the current displayed page
   PageController _pageController;
@@ -32,6 +33,9 @@ class MainNavState extends State<MainNav> {
                   user.logOut();
                   Navigator.of(context).pushReplacementNamed('/LogInPage');
                   break;
+                case MenuAction.Scan:
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new Scan()));
+                  break;
                 default:
               }
             },
@@ -39,6 +43,10 @@ class MainNavState extends State<MainNav> {
               const PopupMenuItem<MenuAction>(
                 value: MenuAction.LogOut,
                 child: const Text("Log Out"),
+              ),
+              const PopupMenuItem<MenuAction>(
+                value: MenuAction.Scan,
+                child: const Text("Scan"),
               )
             ]
           )
@@ -109,5 +117,7 @@ class MainNavState extends State<MainNav> {
     super.dispose();
     _pageController.dispose();
   }
+
+  
 
 }

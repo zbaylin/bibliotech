@@ -87,3 +87,10 @@ Future<String> reserve(Book book) async {
     return "Couldn't reserve ${book.title}: ${response.reasonPhrase}!";
   }
 }
+
+Future<Book> getBook(String isbn) async {
+  final response = await http.get("${config.hostname}/books/byIsbn/$isbn");
+  final json = JSON.decode(response.body);
+
+  return new Book.fromJson(json);
+}
