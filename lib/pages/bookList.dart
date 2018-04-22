@@ -39,15 +39,28 @@ class BookListState extends State<BookList> {
                 future: snapshot.data.toList(),
                 builder: (context, listSnapshot) {
                   switch (listSnapshot.connectionState) {
-                    case ConnectionState.done:
+                    case ConnectionState.done:      
                       return new RefreshIndicator(
                         onRefresh: () {onRefresh(context);},
-                        child: new GridView.count(
-                          crossAxisCount: 2,
-                          children: listSnapshot.data.map<Widget>(
-                            (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
-                          ).toList()
-                        ),
+                        child: new Container(
+                          decoration: new BoxDecoration(
+                            image: new DecorationImage(
+                              image: new AssetImage("assets/wood-square.png"),
+                              fit: BoxFit.fitHeight
+                            )
+                          ),
+                          child: new CustomScrollView(
+                            slivers: <Widget>[
+                              new SliverGrid.count(
+                                crossAxisCount: 2,
+                                children: 
+                                  listSnapshot.data.map<Widget>(
+                                  (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
+                                  ).toList()
+                              )
+                            ],
+                          ),
+                        )
                       );
                     default:
                       return new Center(child: new CircularProgressIndicator());
