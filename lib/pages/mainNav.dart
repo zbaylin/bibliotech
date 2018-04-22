@@ -34,7 +34,7 @@ class MainNavState extends State<MainNav> {
                   Navigator.of(context).pushReplacementNamed('/LogInPage');
                   break;
                 case MenuAction.Scan:
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => new Scan()));
+                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new Scan()));
                   break;
                 default:
               }

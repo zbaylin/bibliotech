@@ -33,13 +33,17 @@ class _ScanState extends State<Scan> {
           ),
           body: new Center(
             child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 new Container(
-                  child: new MaterialButton(
-                      onPressed: scan, child: new Text("Scan")),
+                  child: new RaisedButton(
+                      onPressed: scan, child: new Text("SCAN")),
                   padding: const EdgeInsets.all(8.0),
                 ),
-                new Text(barcode),
+                new Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new Text(barcode),
+                ),
               ],
             ),
           )),
@@ -52,7 +56,7 @@ class _ScanState extends State<Scan> {
       this.barcode = await BarcodeScanner.scan();
       this.book = await getBook(barcode);
       BookInfo bookInfo = BookInfo(book);
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => bookInfo));
+      Navigator.of(context).push(new MaterialPageRoute(builder: (context) => bookInfo));
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -62,7 +66,7 @@ class _ScanState extends State<Scan> {
         setState(() => this.barcode = 'Unknown error: $e');
       }
     } on FormatException{
-      setState(() => this.barcode = 'null (User returned using the "back"-button before scanning anything. Result)');
+      setState(() => this.barcode = 'Please press scan or back');
     } catch (e) {
       setState(() => this.barcode = 'Unknown error: $e');
     }
