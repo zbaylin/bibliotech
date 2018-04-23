@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
+import 'package:local_notifications/local_notifications.dart';
 import 'package:bibliotech/models/book.dart';
 import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/components/cards.dart';
@@ -25,6 +28,51 @@ class BookInfoState extends State<BookInfo> {
   void initState() {
     super.initState();
     book = widget.book;
+  }
+
+  remindMeBeforeDue() {
+    // This will remind the patron n-1 days after they checkout the book to return it
+    new Future.delayed(new Duration(seconds: config.checkoutDuration-1), () async {
+      // Fix for Android 8.0+ which requires all new notifications to be sent through a channel
+      final channel = const AndroidNotificationChannel(
+        id: 'check_in_notification',
+        name: 'Default',
+        description: 'Grant this app the ability to remind ',
+      );
+      await LocalNotifications.createAndroidNotificationChannel(channel:  channel);
+      LocalNotifications.createNotification(
+        title: "${book.title} is due soon!",
+        content: "If it has not been already, ${book.title} must be returned within 24 hours, or by ${DateTime.now().add(new Duration(days: 5))}",
+        id: 0,
+        onNotificationClick: new NotificationAction(
+          actionText: "DISMISS",
+          callback: handleNotificationAction,
+          payload: "DISMISS"
+        ),
+        actions: [
+          new NotificationAction(
+            actionText: "RETURN",
+            callback: handleNotificationAction,
+            payload: "RETURN",
+            launchesApp: false
+          )
+        ],
+        androidSettings: new AndroidSettings(
+          channel: channel,
+        )
+      );
+    });
+  }
+
+  handleNotificationAction(String action) {
+    switch (action) {
+      case "RETURN":
+        checkIn(book);
+        LocalNotifications.removeNotification(0);
+        break;
+      default:
+        LocalNotifications.removeNotification(0);
+    }
   }
 
   @override
@@ -80,9 +128,9 @@ class BookInfoState extends State<BookInfo> {
                                   ],
                                 ),
                                 onPressed: () async {
-                                  final snackbarText = await checkIn(book);
+                                  final response = await checkIn(book);
                                   Scaffold.of(context).showSnackBar(new SnackBar(
-                                    content: new Text(snackbarText)
+                                    content: new Text(response['message'])
                                   ));
                                   setState(() => null);
                                 },
@@ -96,9 +144,12 @@ class BookInfoState extends State<BookInfo> {
                                   ],
                                 ),
                                 onPressed: () async {
-                                  final snackbarText = await checkOut(book);
+                                  final response = await checkOut(book);
+                                  if (response['success']) {
+                                    remindMeBeforeDue();
+                                  }
                                   Scaffold.of(context).showSnackBar(new SnackBar(
-                                    content: new Text(snackbarText)
+                                    content: new Text(response['message'])
                                   ));
                                   setState(() => null);
                                 }
@@ -112,9 +163,9 @@ class BookInfoState extends State<BookInfo> {
                                   ],
                                 ),
                                 onPressed: () async {
-                                  final snackbarText = await reserve(book);
+                                  final response = await reserve(book);
                                   Scaffold.of(context).showSnackBar(new SnackBar(
-                                    content: new Text(snackbarText)
+                                    content: new Text(response['message'])
                                   ));
                                   setState(() => null);
                                 }

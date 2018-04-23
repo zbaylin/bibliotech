@@ -43,6 +43,7 @@ class LoadingScreenState extends State<LoadingScreen> {
     config.schoolName = json['school_name'];
     config.hostname = json['hostname'];
     config.username = json['username'];
+    config.checkoutDuration = json['checkout_duration'];
   }
 
   @override

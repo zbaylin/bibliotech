@@ -61,30 +61,30 @@ Future<bool> doIHave(Book book) async {
   return json['has'];
 }
 
-Future<String> checkOut(Book book) async {
+Future<Map> checkOut(Book book) async {
   final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/checkOutFor/${config.username}");
   if (response.statusCode == 200) {
-    return "Successfully checked out ${book.title}!";
+    return {'success': true, 'message': "Successfully checked out ${book.title}!"};
   } else {
-    return "Couldn't check out ${book.title}: ${response.reasonPhrase}!";
+    return {'success': true, 'message': "Couldn't check out ${book.title}: ${response.reasonPhrase}!"};
   }
 }
 
-Future<String> checkIn(Book book) async {
+Future<Map> checkIn(Book book) async {
   final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/checkInFor/${config.username}");
   if (response.statusCode == 200) {
-    return "Successfully checked in ${book.title}!";
+    return {'success': true, 'message': "Successfully checked in ${book.title}!"};
   } else {
-    return "Couldn't check in ${book.title}: ${response.reasonPhrase}!";
+    return {'success': false, 'message': "Couldn't check in ${book.title}: ${response.reasonPhrase}!"};
   }
 }
 
-Future<String> reserve(Book book) async {
+Future<Map> reserve(Book book) async {
   final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/reserveFor/${config.username}");
   if (response.statusCode == 200) {
-    return "Successfully reserved ${book.title}!";
+    return {'success': true, 'message':"Successfully reserved ${book.title}!"};
   } else {
-    return "Couldn't reserve ${book.title}: ${response.reasonPhrase}!";
+    return {'success': false, 'message': "Couldn't reserve ${book.title}: ${response.reasonPhrase}!"};
   }
 }
 

@@ -10,3 +10,4 @@ String apiKey;
 String schoolName;
 String hostname;
 String username;
+int checkoutDuration;
