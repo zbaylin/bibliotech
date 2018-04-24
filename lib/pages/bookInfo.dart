@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
 import 'package:local_notifications/local_notifications.dart';
@@ -9,6 +8,7 @@ import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/components/cards.dart';
 import 'package:bibliotech/routes/books.dart';
 import 'package:bibliotech/components/googleBooksPanel.dart';
+import 'package:bibliotech/components/stockPanel.dart';
 
 
 class BookInfo extends StatefulWidget {
@@ -201,6 +201,10 @@ class BookInfoState extends State<BookInfo> {
               new TitledCard(
                 title: "Info",
                 child: new GoogleBooksPanel(book)
+              ),
+              new TitledCard(
+                title: "Stock",
+                child: new StockPanel(book),
               )
             ]
           )

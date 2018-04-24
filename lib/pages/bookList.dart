@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:bibliotech/components/bookItem.dart';
 import 'package:bibliotech/routes/books.dart';
 
 enum BookListType {
   SHELF,
-  LIBRARY
+  LIBRARY,
+  SEARCH
 }
 
 class BookList extends StatefulWidget {
-  BookList(this.listType);
+  BookList(this.listType, {this.searchTerm});
 
   final BookListType listType;
+  final String searchTerm;
 
   @override
   State<StatefulWidget> createState() {
@@ -19,12 +22,17 @@ class BookList extends StatefulWidget {
 }
 
 class BookListState extends State<BookList> {
+  String searchTerm;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new FutureBuilder(
-      future: this.widget.listType == BookListType.LIBRARY
-              ? getAllBooks()
-              : getAllMyBooks(),
+      future: setFuture(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.active:
@@ -42,25 +50,18 @@ class BookListState extends State<BookList> {
                     case ConnectionState.done:      
                       return new RefreshIndicator(
                         onRefresh: () {onRefresh(context);},
-                        child: new Container(
-                          decoration: new BoxDecoration(
-                            image: new DecorationImage(
-                              image: new AssetImage("assets/wood-square.png"),
-                              fit: BoxFit.fitHeight
+                        child: new CustomScrollView(
+                          slivers: <Widget>[
+                            new SliverGrid.count(
+                              childAspectRatio: .6,
+                              crossAxisCount: (MediaQuery.of(context).size.width/150).toInt(),
+                              children: 
+                                listSnapshot.data.map<Widget>(
+                                (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
+                                ).toList()
                             )
-                          ),
-                          child: new CustomScrollView(
-                            slivers: <Widget>[
-                              new SliverGrid.count(
-                                crossAxisCount: 2,
-                                children: 
-                                  listSnapshot.data.map<Widget>(
-                                  (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
-                                  ).toList()
-                              )
-                            ],
-                          ),
-                        )
+                          ],
+                        ),
                       );
                     default:
                       return new Center(child: new CircularProgressIndicator());
@@ -74,7 +75,20 @@ class BookListState extends State<BookList> {
   }
 
   onRefresh(BuildContext context) async {
-    setState(() {});
+    setState(() {searchTerm = null;});
     Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("List refreshed"),));
+  }
+
+  Future<Stream> setFuture() {
+    switch (widget.listType) {
+      case BookListType.SEARCH:
+        return searchAllBooks(widget.searchTerm);
+        break;
+      case BookListType.SHELF:
+        return getAllMyBooks();
+        break;
+      default:
+        return getAllBooks();
+    }
   }
 }

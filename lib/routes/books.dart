@@ -24,6 +24,20 @@ Future<Stream<Book>> getAllBooks() async {
     .map((jsonBook) => new Book.fromJson(jsonBook));
 }
 
+Future<Stream<Book>> searchAllBooks(String searchTerm) async {
+  var client = new http.Client();
+  var uri = Uri.parse(config.hostname + "/books/search/$searchTerm");
+  var request = new http.Request('get', uri);
+
+  var response = await client.send(request);
+
+  return response.stream
+    .transform(UTF8.decoder)
+    .transform(JSON.decoder)
+    .expand((jsonBody) => (jsonBody as Map)['books'])
+    .map((jsonBook) => new Book.fromJson(jsonBook));
+}
+
 Future<Stream<Book>> getAllMyBooks() async {
   var client = new http.Client();
   var uri = Uri.parse("${config.hostname}/user/${config.username}/checked_out");
