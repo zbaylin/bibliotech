@@ -39,6 +39,17 @@ flutter:
     - assets/logo.png
     - assets/logo-white.png
     - assets/wood-square.png
+
+    - assets/map/000.png
+    - assets/map/100.png
+    - assets/map/200.png
+    - assets/map/300.png
+    - assets/map/400.png
+    - assets/map/500.png
+    - assets/map/600.png
+    - assets/map/700.png
+    - assets/map/800.png
+    - assets/map/900.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

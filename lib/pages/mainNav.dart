@@ -101,7 +101,7 @@ class MainNavState extends State<MainNav> {
       buildDefaultAppBar: buildAppBar
     );
     bookList = new BookList(BookListType.LIBRARY);
-    map = new LibraryMap();
+    map = new LibraryMap(LibraryMapType.ALL);
     shelf = new BookList(BookListType.SHELF);
   }
 

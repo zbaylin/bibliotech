@@ -9,6 +9,7 @@ import 'package:bibliotech/components/cards.dart';
 import 'package:bibliotech/routes/books.dart';
 import 'package:bibliotech/components/googleBooksPanel.dart';
 import 'package:bibliotech/components/stockPanel.dart';
+import 'package:bibliotech/pages/map.dart';
 
 
 class BookInfo extends StatefulWidget {
@@ -181,7 +182,13 @@ class BookInfoState extends State<BookInfo> {
                           new Text("Find on Map", style: new TextStyle(color: Theme.of(context).primaryColor))
                         ],
                       ),
-                      onPressed: () => print("Go to Map"),
+                      onPressed: () => Navigator.of(context).push(
+                        new MaterialPageRoute(builder: (context) => 
+                        new Scaffold(
+                          appBar: new AppBar(title: new Text("Map: ${book.dewey}")),
+                          body: LibraryMap(LibraryMapType.HIGHLIGHT, deweyDecimal: double.parse(book.dewey)),
+                        )
+                      )),
                     ),
                     new FlatButton(
                       child: new Column(
