@@ -31,6 +31,35 @@ class MainNavState extends State<MainNav> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: searchBar.build(context),
+      drawer: new Drawer(
+        child: new ListView (
+          children: <Widget>[
+            new UserAccountsDrawerHeader (
+              accountName: new Text("${config.username}"),
+              accountEmail: new Text("${config.schoolName}"),
+            ),
+            new ListTile(
+              title: new Text("Log Out"),
+              trailing: new Icon(Icons.exit_to_app),
+              onTap: () => logOut(),
+            ),
+            new ListTile(
+              title: new Text("Pick Application Color"),
+              trailing: new Icon(Icons.palette),
+            ),
+            new ListTile(
+              title: new Text("Scan a Barcode"),
+              trailing: new Icon(Icons.filter_center_focus),
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new Scan())),
+            ),
+            new Divider(),
+            new ListTile(
+              title: new Text("Report a Bug"),
+              trailing: new Icon(Icons.bug_report),
+            ),
+          ],
+        )
+      ),
       body: new PageView(
         children: [
           bookList,
@@ -85,6 +114,11 @@ class MainNavState extends State<MainNav> {
     });
   }
 
+  void logOut(){
+    user.logOut();
+    Navigator.of(context).pushReplacementNamed('/LogInPage');
+  }
+
   @override
   void initState() {
     super.initState();
@@ -116,30 +150,6 @@ class MainNavState extends State<MainNav> {
       title: new Text("Bibliotech: ${config.schoolName}"),
       actions: <Widget>[
         searchBar.getSearchAction(context),
-        new PopupMenuButton<MenuAction>(
-          onSelected: (MenuAction result) {
-            switch (result) {
-              case MenuAction.LogOut:
-                user.logOut();
-                Navigator.of(context).pushReplacementNamed('/LogInPage');
-                break;
-              case MenuAction.Scan:
-                Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new Scan()));
-                break;
-              default:
-            }
-          },
-          itemBuilder: (context) => [
-            const PopupMenuItem<MenuAction>(
-              value: MenuAction.LogOut,
-              child: const Text("Log Out"),
-            ),
-            const PopupMenuItem<MenuAction>(
-              value: MenuAction.Scan,
-              child: const Text("Scan"),
-            )
-          ]
-        )
       ],
     );
   }
