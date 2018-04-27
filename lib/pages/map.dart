@@ -16,6 +16,7 @@ class LibraryMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      // Used a [CustomScrollView] because it allowed us to combine both List and Grid elements
       child: new CustomScrollView(
         slivers: <Widget>[
           new SliverGrid.count(
