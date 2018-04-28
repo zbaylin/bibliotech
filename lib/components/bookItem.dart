@@ -40,8 +40,7 @@ class BookItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 new Container (
-                  decoration: new BoxDecoration(
-                  ),
+                  decoration: new BoxDecoration(),
                   child: new Column(
                     children: <Widget>[
                       new Padding(

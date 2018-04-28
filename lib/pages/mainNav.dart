@@ -27,6 +27,10 @@ class MainNavState extends State<MainNav> {
 
   int _page = 0;
 
+  
+
+  Widget _currentPage;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -44,8 +48,28 @@ class MainNavState extends State<MainNav> {
               onTap: () => logOut()
             ),
             new ListTile(
-              title: new Text("Pick Application Color"),
-              trailing: new Icon(Icons.palette)
+              title: new Text("Library"),
+              trailing: new Icon(Icons.book),
+              onTap: () {
+                setState(() => _currentPage = bookList);
+                Navigator.of(context).pop();
+              },
+            ),
+            new ListTile(
+              title: new Text("Map"),
+              trailing: new Icon(Icons.map),
+              onTap: () {
+                setState(() => _currentPage = map);
+                Navigator.of(context).pop();
+              },
+            ),
+            new ListTile(
+              title: new Text("My Shelf"),
+              trailing: new Icon(Icons.reorder),
+              onTap: () {
+                setState(() => _currentPage = shelf);
+                Navigator.of(context).pop();
+              },
             ),
             new ListTile(
               title: new Text("Scan a Barcode"),
@@ -60,58 +84,8 @@ class MainNavState extends State<MainNav> {
           ]
         )
       ),
-      body: new PageView(
-        children: [
-          bookList,
-          map,
-          shelf
-        ],
-        // Specify the page controller
-        controller: _pageController,
-        onPageChanged: onPageChanged
-      ),
-      bottomNavigationBar: new BottomNavigationBar(
-        items: [
-          new BottomNavigationBarItem(
-              icon: new Icon(Icons.book),
-              title: new Text("My Library")
-          ),
-          new BottomNavigationBarItem(
-              icon: new Icon(Icons.map),
-              title: new Text("Map")
-          ),
-          new BottomNavigationBarItem(
-              icon: new Icon(Icons.reorder),
-              title: new Text("My Shelf")
-          )
-        ],
-
-        /// Will be used to scroll to the next page
-        /// using the _pageController
-        onTap: navigationTapped,
-        currentIndex: _page
-      )
+      body: _currentPage
     );
-  }
-
-  // Called when the user presses on of the
-  // [BottomNavigationBarItem] with corresponding
-  // page index
-  void navigationTapped(int page){
-
-    // Animating to the page.
-    _pageController.animateToPage(
-        page,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.ease
-    );
-  }
-
-
-  void onPageChanged(int page){
-    setState((){
-      this._page = page;
-    });
   }
 
   void logOut(){
