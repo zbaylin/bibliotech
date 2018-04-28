@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bibliotech/pages/bookList.dart';
 
 class MapButton extends StatelessWidget {
 
@@ -8,7 +9,8 @@ class MapButton extends StatelessWidget {
     this.image,
     this.active,
     this.color,
-    this.message
+    this.message,
+    this.startsWith
   });
 
   final VoidCallback onPressed;
@@ -17,6 +19,7 @@ class MapButton extends StatelessWidget {
   final String title;
   final String message;
   final Color color;
+  final int startsWith;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +41,20 @@ class MapButton extends StatelessWidget {
               content: new Text(message.toString()),
               actions: <Widget>[
                 new FlatButton(
+                  child: new Text("VIEW BOOKS"),
+                  onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder:(context) =>
+                    new Scaffold(
+                      appBar: new AppBar(
+                        title: new Text("Dewey: ${startsWith}00"),
+                      ),
+                      body: new BookList(BookListType.DEWEY, deweyRange: startsWith,),
+                    )
+                  )),
+                ),
+                new FlatButton(
                   child: new Text("OK"),
                   onPressed: () => Navigator.of(context).pop(),
-                )
+                ),
               ],
             ),
           );

@@ -6,14 +6,16 @@ import 'package:bibliotech/routes/books.dart';
 enum BookListType {
   SHELF,
   LIBRARY,
-  SEARCH
+  SEARCH,
+  DEWEY
 }
 
 class BookList extends StatefulWidget {
-  BookList(this.listType, {this.searchTerm});
+  BookList(this.listType, {this.searchTerm, this.deweyRange});
 
   final BookListType listType;
   final String searchTerm;
+  final int deweyRange;
 
   @override
   State<StatefulWidget> createState() {
@@ -22,7 +24,6 @@ class BookList extends StatefulWidget {
 }
 
 class BookListState extends State<BookList> {
-  String searchTerm;
 
   @override
   void initState() {
@@ -75,7 +76,6 @@ class BookListState extends State<BookList> {
   }
 
   onRefresh(BuildContext context) async {
-    setState(() {searchTerm = null;});
     Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("List refreshed"),));
   }
 
@@ -87,6 +87,8 @@ class BookListState extends State<BookList> {
       case BookListType.SHELF:
         return getAllMyBooks();
         break;
+      case BookListType.DEWEY:
+        return getBooksWithDewey(widget.deweyRange);
       default:
         return getAllBooks();
     }
