@@ -2,5 +2,11 @@
   "school_name": "North Springs",
   "username": null,
   "hostname": "http://bibliotech.duckdns.org",
-  "checkout_duration": 5
+  "checkout_duration": 5,
+  "twitter": {
+    "consumer_secret": "2BBGlDaxWXzIq4mLOA22yWLzCK5Og7ylJh9N5ZmYbGp5SZomhJ",
+    "consumer_key": "xsWzOZs8elJdXBCbfyWlmsU1O",
+    "access_key": "128196137-Otvd0ZL7Kkfv0chqyoHZp0jCL2NFlOjmhhVKxv4l",
+    "access_secret": "OwDmL5kXW7HJG8eALP7rWtXWzr6K7qm4I87jA6Pe3hc2N"
+  }
 }

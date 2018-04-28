@@ -3,11 +3,13 @@ import 'package:bibliotech/models/book.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:bibliotech/config.dart' as config;
+import 'package:twitter/twitter.dart';
 
 main() async {
-  config.hostname = "http://localhost:9292";
-  var books = await getAllBooks();
-  books.listen((book) => print(book.isbn));
+  config.hostname = "http://bibliotech.duckdns.org";
+  final Book book = await getBook("9780060803964");
+  var googleBook = await getFromTwitter(book);
+  print(googleBook);
 }
 
 Future<Stream<Book>> getAllBooks() async {
@@ -83,8 +85,15 @@ Future<Stream<Book>> getBooksWithDewey(int range) async {
 Future<Map> getFromGoogleBooks(Book book) async {
   final response = await http.get("https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}");
   final json = JSON.decode(response.body);
-
+  
   return json;
+}
+
+Future<List> getFromTwitter(Book book) async {
+  Twitter twitter = new Twitter(config.twitter['consumer_key'], config.twitter['consumer_secret'], config.twitter['access_key'], config.twitter['access_secret']);
+  final response = await twitter.request("GET", "search/tweets.json?q=${Uri.encodeComponent(book.title + " " + book.author)}");
+  final json = JSON.decode(response.body);
+  return json['statuses'];
 }
 
 Future<bool> doIHave(Book book) async {

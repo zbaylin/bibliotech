@@ -44,6 +44,10 @@ class LoadingScreenState extends State<LoadingScreen> {
     config.hostname = json['hostname'];
     config.username = json['username'];
     config.checkoutDuration = json['checkout_duration'];
+    config.twitter = {'consumer_key': json['twitter']['consumer_key'],
+                      'consumer_secret': json['twitter']['consumer_secret'],
+                      'access_key': json['twitter']['access_key'],
+                      'access_secret': json['twitter']['access_secret']};
   }
 
   @override

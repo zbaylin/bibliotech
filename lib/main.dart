@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         // "hot reload" (press "r" in the console where you ran "flutter run",
         // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
         // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.deepOrange,
+        primarySwatch: Colors.blueGrey,
       ),
       // Start at the loading screen while we wait for the main app to load in
       home: new LoadingScreen()

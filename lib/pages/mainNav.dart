@@ -5,6 +5,7 @@ import 'package:bibliotech/pages/bookList.dart';
 import 'package:bibliotech/utils/user.dart' as user;
 import 'package:bibliotech/utils/scan.dart' as scanner;
 import 'package:bibliotech/pages/map.dart';
+import 'package:bibliotech/routes/bugs.dart';
 
 
 class MainNav extends StatefulWidget {
@@ -25,9 +26,7 @@ class MainNavState extends State<MainNav> {
   LibraryMap map;
   BookList shelf;
 
-  int _page = 0;
-
-  
+  TextEditingController bugController = new TextEditingController();
 
   Widget _currentPage;
 
@@ -40,12 +39,13 @@ class MainNavState extends State<MainNav> {
           children: <Widget>[
             new UserAccountsDrawerHeader (
               accountName: new Text("${config.username}"),
-              accountEmail: new Text("${config.schoolName}")
-            ),
-            new ListTile(
-              title: new Text("Log Out"),
-              trailing: new Icon(Icons.exit_to_app),
-              onTap: () => logOut()
+              accountEmail: new Text("${config.schoolName}"),
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new AssetImage('assets/acct-background.jpg'),
+                  fit: BoxFit.fill
+                )
+              ),
             ),
             new ListTile(
               title: new Text("Library"),
@@ -79,8 +79,40 @@ class MainNavState extends State<MainNav> {
             new Divider(),
             new ListTile(
               title: new Text("Report a Bug"),
-              trailing: new Icon(Icons.bug_report)
-            )
+              trailing: new Icon(Icons.bug_report),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => new AlertDialog(
+                    title: new Text("Bug Report"),
+                    content: new Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        new Text("Please let us know what happened and what you were doing at the time of the bug."),
+                        new TextField(
+                          controller: bugController,
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      new FlatButton( 
+                        child: new Text("SUBMIT"),
+                        onPressed: () async { 
+                          await submitBugReport(bugController.text);
+                          bugController.clear();
+                          Navigator.of(context).pop();
+                        }
+                      )
+                    ],
+                  )
+                );
+              },
+            ),
+            new ListTile(
+              title: new Text("Log Out"),
+              trailing: new Icon(Icons.exit_to_app),
+              onTap: () => logOut()
+            ),
           ]
         )
       ),
@@ -111,6 +143,7 @@ class MainNavState extends State<MainNav> {
     bookList = new BookList(BookListType.LIBRARY);
     map = new LibraryMap(LibraryMapType.ALL);
     shelf = new BookList(BookListType.SHELF);
+    _currentPage = bookList;
   }
 
   @override
@@ -127,6 +160,4 @@ class MainNavState extends State<MainNav> {
       ],
     );
   }
-  
-
 }

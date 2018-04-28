@@ -9,6 +9,7 @@ import 'package:bibliotech/components/cards.dart';
 import 'package:bibliotech/routes/books.dart';
 import 'package:bibliotech/components/googleBooksPanel.dart';
 import 'package:bibliotech/components/stockPanel.dart';
+import 'package:bibliotech/components/twitterPanel.dart';
 import 'package:bibliotech/pages/map.dart';
 
 
@@ -198,7 +199,7 @@ class BookInfoState extends State<BookInfo> {
                         ],
                       ),
                       onPressed: () => share("Check out ${book.title} by ${book.author} at ${config.schoolName}"),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -212,6 +213,10 @@ class BookInfoState extends State<BookInfo> {
               new TitledCard(
                 title: "Stock",
                 child: new StockPanel(book),
+              ),
+              new TitledCard(
+                title: "Twitter",
+                child: new TwitterPanel(book),
               )
             ]
           )
