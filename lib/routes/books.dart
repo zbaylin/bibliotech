@@ -62,6 +62,24 @@ Future<Stream<Book>> getAllMyBooks() async {
     });
 }
 
+Future<Stream<Book>> getBooksWithDewey(int range) async {
+  var client = new http.Client();
+  var uri = Uri.parse("${config.hostname}/books/byDewey/$range");
+  var request = new http.Request('get', uri);
+
+  var response = await client.send(request);
+
+  return response.stream
+    .transform(UTF8.decoder)
+    .transform(JSON.decoder)
+    .expand((jsonBody) => (jsonBody as Map)['books'])
+    .asyncMap((jsonBook) async {
+      final response = await http.get("${config.hostname}/books/byIsbn/${(jsonBook as Map)['isbn']}");
+      final json = JSON.decode(response.body);
+      return new Book.fromJson(json);
+    });
+}
+
 Future<Map> getFromGoogleBooks(Book book) async {
   final response = await http.get("https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}");
   final json = JSON.decode(response.body);

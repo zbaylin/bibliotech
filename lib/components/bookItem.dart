@@ -41,7 +41,6 @@ class BookItem extends StatelessWidget {
                 ),
                 new Container (
                   decoration: new BoxDecoration(
-                    color: Colors.white
                   ),
                   child: new Column(
                     children: <Widget>[

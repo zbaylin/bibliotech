@@ -16,6 +16,7 @@ class LibraryMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      // Used a [CustomScrollView] because it allowed us to combine both List and Grid elements
       child: new CustomScrollView(
         slivers: <Widget>[
           new SliverGrid.count(
@@ -24,6 +25,7 @@ class LibraryMap extends StatelessWidget {
               // N.B. These comments apply to the rest of the regions
               // [MapButton] can be found in components/mapButton.dart 
               new MapButton(
+                startsWith: 0,
                 // Assigns the button a specific tile region
                 image: new AssetImage('assets/map/000.png'),
                 // Draws the label for this region on top of it
@@ -42,6 +44,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.purpleAccent[100],  
               ),
               new MapButton(
+                startsWith: 1,
                 image: new AssetImage('assets/map/100.png'),
                 title: "100-199\nPhilosophy and Psychology",
                 message: "Here you can find books written by the world's great philosophers! From Aristotle to Dostoevsky!",
@@ -51,6 +54,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.deepPurpleAccent[100],   
               ),
               new MapButton(
+                startsWith: 2,
                 image: new AssetImage('assets/map/200.png'),
                 title: "200-299\nReligion and Mythology",
                 message: "Read up on the world's numerous religions and theological texts!",
@@ -60,6 +64,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.indigoAccent[100]  
               ),
               new MapButton(
+                startsWith: 3,
                 image: new AssetImage('assets/map/300.png'),
                 title: "300-399\nSocial Sciences",
                 message: "Find out how society runs, read up on Law and the major governments of the world in the Social Science section.",
@@ -69,6 +74,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.blueAccent[100]  
               ),
               new MapButton(
+                startsWith: 4,
                 image: new AssetImage('assets/map/400.png'),
                 title: "400-499\nLanguage",
                 message: "Want to pick up a new language or read foreign texts? Find them here.",
@@ -78,6 +84,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.tealAccent[100]
               ),
               new MapButton(
+                startsWith: 5,
                 image: new AssetImage('assets/map/500.png'),
                 title: "500-599\nNatural Science",
                 message: "Discover the world around you!",
@@ -87,6 +94,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.greenAccent[100]
               ),
               new MapButton(
+                startsWith: 6,
                 image: new AssetImage('assets/map/600.png'),
                 title: "600-699\nTechnology",
                 message: "Want to be a doctor, an engineer, or any applied science? Find books on that here!",
@@ -96,6 +104,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.lightGreenAccent[100]
               ),
               new MapButton(
+                startsWith: 7,
                 image: new AssetImage('assets/map/700.png'),
                 title: "700-799\nArts",
                 message: "Here you can find works from DaVinci to Picasso and more!",
@@ -105,6 +114,7 @@ class LibraryMap extends StatelessWidget {
                 color: Colors.limeAccent[100]
               ),
               new MapButton(
+                startsWith: 8,
                 image: new AssetImage('assets/map/800.png'),
                 title: "800-899\nLiterature",
                 message: "Find all of the classics here! From Catcher in the Rye to Hamlet, you can find it here!",
@@ -115,6 +125,7 @@ class LibraryMap extends StatelessWidget {
               ),
               new Container(),
               new MapButton(
+                startsWith: 9,
                 image: new AssetImage('assets/map/900.png'),
                 title: "900-999\nGeography and History",
                 message: "Find and atlas or a history textbook in this section!",
