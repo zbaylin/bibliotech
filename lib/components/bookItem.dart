@@ -33,7 +33,7 @@ class BookItem extends StatelessWidget {
                   ),
                   decoration: new BoxDecoration(
                     boxShadow: [
-                      new BoxShadow(blurRadius: 4.0, spreadRadius: 1.0)
+                      new BoxShadow(blurRadius: 3.5, spreadRadius: -3.0)
                     ]
                   )
                 )
