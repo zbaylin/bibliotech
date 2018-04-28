@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 //This specifies all the fields for a single book object
 class Book {
   final int isbn;
@@ -6,7 +8,7 @@ class Book {
   final String author;
   final String publisher;
   final int edition;
-  final String reservedBy;
+  final List reservedBy;
   final int numLeft;
 
   Book.fromJson(Map jsonMap)
@@ -17,5 +19,5 @@ class Book {
     publisher = jsonMap['publisher'],
     edition = jsonMap['edition'],
     numLeft = jsonMap['left'],
-    reservedBy =  jsonMap['reserved_by'];
+    reservedBy =  JSON.decode(jsonMap['reserved_by']);
 }

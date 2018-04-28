@@ -24,6 +24,20 @@ Future<Stream<Book>> getAllBooks() async {
     .map((jsonBook) => new Book.fromJson(jsonBook));
 }
 
+Future<Stream<Book>> searchAllBooks(String searchTerm) async {
+  var client = new http.Client();
+  var uri = Uri.parse(config.hostname + "/books/search/$searchTerm");
+  var request = new http.Request('get', uri);
+
+  var response = await client.send(request);
+
+  return response.stream
+    .transform(UTF8.decoder)
+    .transform(JSON.decoder)
+    .expand((jsonBody) => (jsonBody as Map)['books'])
+    .map((jsonBook) => new Book.fromJson(jsonBook));
+}
+
 Future<Stream<Book>> getAllMyBooks() async {
   var client = new http.Client();
   var uri = Uri.parse("${config.hostname}/user/${config.username}/checked_out");
@@ -61,29 +75,36 @@ Future<bool> doIHave(Book book) async {
   return json['has'];
 }
 
-Future<String> checkOut(Book book) async {
+Future<Map> checkOut(Book book) async {
   final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/checkOutFor/${config.username}");
   if (response.statusCode == 200) {
-    return "Successfully checked out ${book.title}!";
+    return {'success': true, 'message': "Successfully checked out ${book.title}!"};
   } else {
-    return "Couldn't check out ${book.title}: ${response.reasonPhrase}!";
+    return {'success': true, 'message': "Couldn't check out ${book.title}: ${response.reasonPhrase}!"};
   }
 }
 
-Future<String> checkIn(Book book) async {
+Future<Map> checkIn(Book book) async {
   final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/checkInFor/${config.username}");
   if (response.statusCode == 200) {
-    return "Successfully checked in ${book.title}!";
+    return {'success': true, 'message': "Successfully checked in ${book.title}!"};
   } else {
-    return "Couldn't check in ${book.title}: ${response.reasonPhrase}!";
+    return {'success': false, 'message': "Couldn't check in ${book.title}: ${response.reasonPhrase}!"};
   }
 }
 
-Future<String> reserve(Book book) async {
+Future<Map> reserve(Book book) async {
   final response = await http.post("${config.hostname}/books/byIsbn/${book.isbn}/reserveFor/${config.username}");
   if (response.statusCode == 200) {
-    return "Successfully reserved ${book.title}!";
+    return {'success': true, 'message':"Successfully reserved ${book.title}!"};
   } else {
-    return "Couldn't reserve ${book.title}: ${response.reasonPhrase}!";
+    return {'success': false, 'message': "Couldn't reserve ${book.title}: ${response.reasonPhrase}!"};
   }
+}
+
+Future<Book> getBook(String isbn) async {
+  final response = await http.get("${config.hostname}/books/byIsbn/$isbn");
+  final json = JSON.decode(response.body);
+
+  return new Book.fromJson(json);
 }
