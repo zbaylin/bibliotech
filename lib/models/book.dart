@@ -19,5 +19,5 @@ class Book {
     publisher = jsonMap['publisher'],
     edition = jsonMap['edition'],
     numLeft = jsonMap['left'],
-    reservedBy =  JSON.decode(jsonMap['reserved_by']);
+    reservedBy = JSON.decode(jsonMap['reserved_by']);
 }

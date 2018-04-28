@@ -3,7 +3,7 @@ import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/pages/bookList.dart';
 import 'package:bibliotech/utils/user.dart' as user;
-import 'package:bibliotech/pages/scan.dart';
+import 'package:bibliotech/utils/scan.dart' as scanner;
 import 'package:bibliotech/pages/map.dart';
 
 
@@ -36,28 +36,28 @@ class MainNavState extends State<MainNav> {
           children: <Widget>[
             new UserAccountsDrawerHeader (
               accountName: new Text("${config.username}"),
-              accountEmail: new Text("${config.schoolName}"),
+              accountEmail: new Text("${config.schoolName}")
             ),
             new ListTile(
               title: new Text("Log Out"),
               trailing: new Icon(Icons.exit_to_app),
-              onTap: () => logOut(),
+              onTap: () => logOut()
             ),
             new ListTile(
               title: new Text("Pick Application Color"),
-              trailing: new Icon(Icons.palette),
+              trailing: new Icon(Icons.palette)
             ),
             new ListTile(
               title: new Text("Scan a Barcode"),
               trailing: new Icon(Icons.filter_center_focus),
-              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new Scan())),
+              onTap: () async => await scanner.scan(context)
             ),
             new Divider(),
             new ListTile(
               title: new Text("Report a Bug"),
-              trailing: new Icon(Icons.bug_report),
-            ),
-          ],
+              trailing: new Icon(Icons.bug_report)
+            )
+          ]
         )
       ),
       body: new PageView(
