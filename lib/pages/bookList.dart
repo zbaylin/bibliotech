@@ -54,8 +54,8 @@ class BookListState extends State<BookList> {
                         child: new CustomScrollView(
                           slivers: <Widget>[
                             new SliverGrid.count(
-                              childAspectRatio: .6,
-                              crossAxisCount: (MediaQuery.of(context).size.width/150).toInt(),
+                              childAspectRatio: MediaQuery.of(context).size.width/MediaQuery.of(context).size.height,
+                              crossAxisCount: MediaQuery.of(context).size.width~/150,
                               children: 
                                 listSnapshot.data.map<Widget>(
                                 (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)

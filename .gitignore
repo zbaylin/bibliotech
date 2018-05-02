@@ -9,4 +9,4 @@ build/
 ios/.generated/
 packages
 .flutter-plugins
-pubspec.lock
+pubspec.lockconfig.json

@@ -93,7 +93,12 @@ class BookInfoState extends State<BookInfo> {
                 imageUrl: "${config.hostname}/img/${book.isbn}",
                 width: 600.0,
                 height: 300.0,
-                fit: BoxFit.cover
+                fit: BoxFit.cover,
+                errorWidget: new Container(
+                  child: new Icon(Icons.book, size: 300.0,),
+                  width: 600.0,
+                  height: 300.0,
+                ),
               ),
               // This will create a Row of Buttons
               new Padding(

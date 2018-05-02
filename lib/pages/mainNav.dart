@@ -39,6 +39,9 @@ class MainNavState extends State<MainNav> {
           children: <Widget>[
             new UserAccountsDrawerHeader (
               accountName: new Text("${config.username}"),
+              currentAccountPicture: new CircleAvatar(
+                child: new Text(config.username[0]),
+              ),
               accountEmail: new Text("${config.schoolName}"),
               decoration: new BoxDecoration(
                 image: new DecorationImage(
@@ -136,7 +139,10 @@ class MainNavState extends State<MainNav> {
         appBar: new AppBar(
           title: new Text("Search: $search"),
         ),
-        body: new BookList(BookListType.SEARCH, searchTerm: search,),
+        body: (search.isNotEmpty
+        ? new BookList(BookListType.SEARCH, searchTerm: search,)
+        // Fixes bug that shows error screen when the user searches an empty string
+        : new BookList(BookListType.LIBRARY)),
       ))),
       buildDefaultAppBar: buildAppBar
     );

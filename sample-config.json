@@ -1,0 +1,16 @@
+{
+  "school_name": "North Springs",
+  "username": null,
+  "hostname": "http://bibliotech.duckdns.org",
+  "checkout_duration": 5,
+  "twitter": {
+    "consumer_secret": "CHANGEME",
+    "consumer_key": "CHANGEME",
+    "access_key": "CHANGEME",
+    "access_secret": "CHANGEME"
+  },
+  "goodreads": {
+    "key": "CHANGEME",
+    "secret": "CHANGEME"
+  }
+}

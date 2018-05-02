@@ -28,36 +28,55 @@ class TwitterPanelState extends State<TwitterPanel> {
             return new CircularProgressIndicator();
             break;
           default:
-            return new Column(
-              children: [
-                new Container(
-                  child: new Text("Check out what others are saying", style: new TextStyle(fontStyle: FontStyle.italic)),
-                ),
-                new Column(
-                  children: snapshot.data.take(5).map<Widget>((tweet) =>
-                    new ListTile(
-                      title: new Text(tweet['user']['screen_name']),
-                      subtitle: new Text(tweet['text']),
-                      onTap: () => launch("https://twitter.com/statuses/${tweet['id_str']}"),
-                    )
-                  ).toList()
-                ),
-                new Container(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: new FlatButton(
-                    child: new Text(
-                      "TWEET", style: new TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                    onPressed: () {
-                      final String message = "Check out ${widget.book.title} by ${widget.book.author} at ${config.schoolName}!";
-                      launch("https://twitter.com/intent/tweet?text=$message");
-                    },
+            if (snapshot.hasError) {
+              return new TwitterError();
+            }
+            try {
+              return new Column(
+                children: [
+                  new Container(
+                    child: new Text("Check out what others are saying", style: new TextStyle(fontStyle: FontStyle.italic)),
                   ),
-                )
-              ]
-            );
+                  new Column(
+                    children: snapshot.data.take(5).map<Widget>((tweet) =>
+                      new ListTile(
+                        title: new Text(tweet['user']['screen_name']),
+                        subtitle: new Text(tweet['text']),
+                        onTap: () => launch("https://twitter.com/statuses/${tweet['id_str']}"),
+                      )
+                    ).toList()
+                  ),
+                  new Container(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: new FlatButton(
+                      child: new Text(
+                        "TWEET", style: new TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                      onPressed: () {
+                        final String message = "Check out ${widget.book.title} by ${widget.book.author} at ${config.schoolName}!";
+                        launch("https://twitter.com/intent/tweet?text=$message");
+                      },
+                    ),
+                  )
+                ]
+              );
+            } catch (e) {
+              return new TwitterError();
+            }
         }
       }
+    );
+  }
+}
+
+class TwitterError extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Column(
+      children: <Widget>[
+        new Text("Uh oh!", style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0)),
+        new Text("We can't seem to contact Twitter right now.")
+      ],
     );
   }
 }
