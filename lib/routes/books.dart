@@ -89,6 +89,12 @@ Future<Map> getFromGoogleBooks(Book book) async {
   return json;
 }
 
+Future<Map> getFromGoogleBooksByISBN(String isbn) async {
+  final response = await http.get("https://www.googleapis.com/books/v1/volumes?q=isbn:$isbn");
+  final json = JSON.decode(response.body);
+  return json;
+}
+
 Future<List> getFromTwitter(Book book) async {
   Twitter twitter = new Twitter(config.twitter['consumer_key'], config.twitter['consumer_secret'], config.twitter['access_key'], config.twitter['access_secret']);
   final response = await twitter.request("GET", "search/tweets.json?q=${Uri.encodeComponent(book.title + " " + book.author)}");
@@ -132,6 +138,10 @@ Future<Map> reserve(Book book) async {
 Future<Book> getBook(String isbn) async {
   final response = await http.get("${config.hostname}/books/byIsbn/$isbn");
   final json = JSON.decode(response.body);
-
-  return new Book.fromJson(json);
+  if (json == null) {
+    return null;
+  } else {
+    print(response.body);
+    return new Book.fromJson(json);
+  }
 }
