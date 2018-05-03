@@ -1,8 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'package:bibliotech/models/book.dart';
 import 'dart:async';
+import 'dart:io';
 import 'dart:convert';
 import 'package:bibliotech/config.dart' as config;
+import 'package:bibliotech/utils/config.dart';
 import 'package:twitter/twitter.dart';
 
 main() async {
@@ -57,10 +59,8 @@ Future<Stream<Book>> getAllMyBooks() async {
     // Basically, this function allows us to request additional details about the book from the API before
     // returning the stream of books to the user. This allows us to construct the full Book object from
     // and endpoint that only returns the ISBN (but not the title, author, etc.).
-    .asyncMap((jsonBook) async {
-      final response = await http.get("${config.hostname}/books/byIsbn/${(jsonBook as Map)['isbn']}");
-      final json = JSON.decode(response.body);
-      return new Book.fromJson(json);
+    .map((jsonBook) {
+      return new Book.fromJson(jsonBook);
     });
 }
 

@@ -21,6 +21,7 @@ class LoadingScreenState extends State<LoadingScreen> {
     determineNext();
   }
 
+
   // Determines the next page to go to based on the state of the config file
   determineNext() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -35,7 +36,7 @@ class LoadingScreenState extends State<LoadingScreen> {
   }
 
   // This stores all the config fields in memory
-  // Faster than reading in the YAML config file each time
+  // Faster than reading in the JSON config file each time
   cacheConfig() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     File configFile = new File("${appDocDir.path}/config.json");

@@ -1,5 +1,4 @@
 library bibliotech.config;
-
 /* 
   This is a method to include global config variables
   ex. a bool "isLoggedIn" could be referenced globally as config.isLoggedIn
@@ -12,3 +11,4 @@ String hostname;
 String username;
 int checkoutDuration;
 Map twitter;
+Map goodreads;

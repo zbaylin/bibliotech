@@ -49,8 +49,8 @@ class BookItem extends StatelessWidget {
                       ),
                       new Text(book.author, maxLines: 1),
                       (this.type == BookItemType.IN_LIBRARY
-                      ? new Text("${book.numLeft.toString()} left in stock")
-                      : new Container())
+                      ? new Text("${book.numLeft} left in stock")
+                      : new Text("Due ${book.dueDate}"))
                     ],
                   ),
                 )

@@ -10,6 +10,8 @@ class Book {
   final int edition;
   final List reservedBy;
   final int numLeft;
+  final Map sourceMap;
+  final String dueDate;
 
   Book.fromJson(Map jsonMap)
   : isbn = jsonMap['isbn'],
@@ -19,5 +21,7 @@ class Book {
     publisher = jsonMap['publisher'],
     edition = jsonMap['edition'],
     numLeft = jsonMap['left'],
-    reservedBy = JSON.decode(jsonMap['reserved_by']);
+    reservedBy = JSON.decode(jsonMap['reserved_by']),
+    dueDate = jsonMap['due'],
+    sourceMap = jsonMap;
 }

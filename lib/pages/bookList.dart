@@ -58,7 +58,9 @@ class BookListState extends State<BookList> {
                               crossAxisCount: MediaQuery.of(context).size.width~/150,
                               children: 
                                 listSnapshot.data.map<Widget>(
-                                (book) => new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF)
+                                (book) {
+                                    return new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF);
+                                  }
                                 ).toList()
                             )
                           ],

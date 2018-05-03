@@ -8,9 +8,5 @@
     "consumer_key": "CHANGEME",
     "access_key": "CHANGEME",
     "access_secret": "CHANGEME"
-  },
-  "goodreads": {
-    "key": "CHANGEME",
-    "secret": "CHANGEME"
   }
 }

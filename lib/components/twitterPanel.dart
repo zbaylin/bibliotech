@@ -38,13 +38,18 @@ class TwitterPanelState extends State<TwitterPanel> {
                     child: new Text("Check out what others are saying", style: new TextStyle(fontStyle: FontStyle.italic)),
                   ),
                   new Column(
-                    children: snapshot.data.take(5).map<Widget>((tweet) =>
+                    children: (snapshot.data.isNotEmpty 
+                    ? snapshot.data.take(5).map<Widget>((tweet) =>
                       new ListTile(
                         title: new Text(tweet['user']['screen_name']),
                         subtitle: new Text(tweet['text']),
-                        onTap: () => launch("https://twitter.com/statuses/${tweet['id_str']}"),
+                        onTap: () => launch("https://twitter.com/i/web/status/${tweet['id_str']}"),
                       )
                     ).toList()
+                    : [
+                        new Text("Bummer.", style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0)),
+                        new Text("No Tweets found. Be the first to say something!")
+                      ])
                   ),
                   new Container(
                     alignment: AlignmentDirectional.centerEnd,

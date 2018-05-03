@@ -7,7 +7,6 @@ import 'package:bibliotech/utils/scan.dart' as scanner;
 import 'package:bibliotech/pages/map.dart';
 import 'package:bibliotech/routes/bugs.dart';
 
-
 class MainNav extends StatefulWidget {
   @override
   MainNavState createState() {
