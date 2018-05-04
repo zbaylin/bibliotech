@@ -6,12 +6,15 @@ import 'package:bibliotech/utils/user.dart' as user;
 import 'package:bibliotech/utils/scan.dart' as scanner;
 import 'package:bibliotech/pages/map.dart';
 import 'package:bibliotech/routes/bugs.dart';
+import 'package:flutter/services.dart';
 
 
 class MainNav extends StatefulWidget {
   @override
   MainNavState createState() {
+    
     return new MainNavState();
+    
   }
 }
 
@@ -29,9 +32,12 @@ class MainNavState extends State<MainNav> {
   TextEditingController bugController = new TextEditingController();
 
   Widget _currentPage;
-
+  
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return new Scaffold(
       appBar: searchBar.build(context),
       drawer: new Drawer(
