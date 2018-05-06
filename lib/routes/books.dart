@@ -75,11 +75,7 @@ Future<Stream<Book>> getBooksWithDewey(int range) async {
     .transform(UTF8.decoder)
     .transform(JSON.decoder)
     .expand((jsonBody) => (jsonBody as Map)['books'])
-    .asyncMap((jsonBook) async {
-      final response = await http.get("${config.hostname}/books/byIsbn/${(jsonBook as Map)['isbn']}");
-      final json = JSON.decode(response.body);
-      return new Book.fromJson(json);
-    });
+    .map((jsonBook) => new Book.fromJson(jsonBook));
 }
 
 Future<Map> getFromGoogleBooks(Book book) async {

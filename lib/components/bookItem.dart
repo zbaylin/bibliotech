@@ -70,9 +70,9 @@ class BookItem extends StatelessWidget {
                       ),
                       new Text(book.author, maxLines: 1),
                       // Selects the last line of the card based on the BookItemType
-                      (this.type == BookItemType.IN_LIBRARY
-                      ? new Text("${book.numLeft} left in stock")
-                      : new Text("Due ${book.dueDate}"))
+                      (this.type == BookItemType.ON_SHELF
+                      ? new Text("Due ${book.dueDate}")
+                      : new Text("${book.numLeft} left in stock"))
                     ],
                   ),
                 )

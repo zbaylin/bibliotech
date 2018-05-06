@@ -68,3 +68,8 @@ They can also hit the **[TWEET]** button to share their own thoughts about the b
 
 
 <img src="/demo/twitter.gif?raw=true" width="200px">
+
+### Map
+What good is a library app if the user can't find the book? **bibliotech** displays and easy to read, interactive map to the user.
+
+Each individual book can also be located on the map using the **[Find On Map]** button on the book's info page.

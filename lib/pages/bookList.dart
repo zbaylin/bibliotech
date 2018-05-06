@@ -59,7 +59,7 @@ class BookListState extends State<BookList> {
                               children: 
                                 listSnapshot.data.map<Widget>(
                                 (book) {
-                                    return new BookItem(book, this.widget.listType == BookListType.LIBRARY ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF);
+                                    return new BookItem(book, this.widget.listType != BookListType.SHELF ? BookItemType.IN_LIBRARY : BookItemType.ON_SHELF);
                                   }
                                 ).toList()
                             )
