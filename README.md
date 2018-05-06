@@ -43,12 +43,13 @@ by Zach Baylin, Eric Miller, and Ohad Rau
 ### Checking In, Out and Reserving Books
 Checking out a book is as simple for a user as clicking its entry in the Library Book List. Here, the app will check if the user has the book, and if the book is in stock.
 
-![Checking Out](https://i.imgur.com/4sRSQB7.gif)
+<img src="/demo/check_out.gif?raw=true" width="200px">
+
 
 ### Scanning Books
 If a user has a book that they want to check in or out, they can simply use the scanning feature built into **bibliotech**. It will bring them to the same book info screen as if they simply clicked on it from the list.
 
-![Scanning](https://i.imgur.com/ZomQjeS.gif)
+<img src="/demo/scanning.gif?raw=true" width="200px">
 
 ### Searching Books
 To search for a book, the user simply has to click on the search icon in the upper right corner of the main navigator. They can search the title, author, or ISBN of the book they want to find.
@@ -66,4 +67,4 @@ If a use taps on one of these Tweets, they will be brought to that Tweet's page 
 They can also hit the **[TWEET]** button to share their own thoughts about the book, with a template Tweet being generated for them.
 
 
-![Twitter](https://i.imgur.com/84rhfWZ.gif)
+<img src="/demo/twitter.gif?raw=true" width="200px">
