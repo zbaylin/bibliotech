@@ -36,7 +36,7 @@ class MainNavState extends State<MainNav> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitUp
     ]);
     return new Scaffold(
       appBar: searchBar.build(context),

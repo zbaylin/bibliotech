@@ -143,10 +143,10 @@ class LibraryMap extends StatelessWidget {
             child: new Container(
               padding: const EdgeInsets.all(8.0),
               child: new Text("Tap on a region to find more information", textAlign: TextAlign.center,),
-            ),
+            )
           )
-        ],
-      ),
+        ]
+      )
     );
   }
 }
