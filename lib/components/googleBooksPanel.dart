@@ -5,18 +5,25 @@ import 'package:bibliotech/models/book.dart';
 import 'dart:math';
 import 'package:bibliotech/components/text.dart';
 
+// This StatefulWidget is meant to be an embedded view of the Google Books page
+// for a specific book in the library, allowing the user to view the contents of
+// the Google Books database (for things like ratings, genres, and so forth).
 class GoogleBooksPanel extends StatefulWidget {
-
   GoogleBooksPanel(this.book);
 
   final Book book;
 
+  // Initializes the state to a GoogleBooksPanelState when rendered.
   @override
   GoogleBooksPanelState createState() => new GoogleBooksPanelState();
 }
 
-class GoogleBooksPanelState extends State<GoogleBooksPanel> {
-  
+// This State object stores the state of the GoogleBooksPanel widget, handling the
+// actual implementation of the widget's rendering code and behaviors.
+class GoogleBooksPanelState extends State<GoogleBooksPanel> {  
+  // This is the default callback when the GoogleBooksPanel gets rendered. It lays out
+  // both the way the view is set up and the way that all the data gets loaded in
+  // asynchronously.
   @override
   Widget build(BuildContext context) {
     // Waits until the data has been received from Google Books
@@ -33,12 +40,16 @@ class GoogleBooksPanelState extends State<GoogleBooksPanel> {
             break;
           // If the request has been completed, show the information
           default:
+            // If we get an error, we just return the GoogleBookError widget instead.
             if (snapshot.hasError) {
               return new GoogleBookError();
             }
             try {
-              // Assigns the first result of the request to a new map
+              // Assigns the first result of the request to a new Map (like a dictionary)
               Map apiResponse = snapshot.data['items'][0];
+              // The default layout of the GoogleBooksPanel. Built from a Rating, description,
+              // genre, etc. Because the GoogleBooks API doesn't always have every piece of
+              // data available, each piece has a default "N/A" state.
               return new Container(
                 padding: EdgeInsets.all(12.0),
                 alignment: AlignmentDirectional.topStart,
@@ -60,7 +71,7 @@ class GoogleBooksPanelState extends State<GoogleBooksPanel> {
                         foregroundColor: Colors.white,
                       )),
                     ),
-                    new Text("Description",  textAlign: TextAlign.start, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
+                    new Text("Description",  textAlign: TextAlign.start, style: new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
                     (apiResponse['volumeInfo']['description'] == null
                     ? new Text("None found")
                     : new Text(apiResponse['volumeInfo']['description'], maxLines: 12, overflow: TextOverflow.ellipsis,)),
@@ -90,11 +101,14 @@ class GoogleBooksPanelState extends State<GoogleBooksPanel> {
               return new GoogleBookError();
             }
         }
-      },
+      }
     );
   }
 }
 
+// This Widget gets displayed in place of the GoogleBooksPanel in the event of an error finding
+// the GoogleBooks page for that book. Simply shows an error message to let the user know what
+// happened.
 class GoogleBookError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -102,7 +116,7 @@ class GoogleBookError extends StatelessWidget {
       children: <Widget>[
         new Text("Uh oh!", style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0)),
         new Text("We can't seem to find this book right now.")
-      ],
+      ]
     );
   }
 }
