@@ -1,4 +1,4 @@
-# bibliotech
+# <img src="/demo/icon.png?raw=true" width="64px"> bibliotech
 
 The next generation of Library Management.
 
@@ -28,7 +28,7 @@ by Zach Baylin, Eric Miller, and Ohad Rau
 # Main Features
 
 **bibliotech** was designed to meet the following requirements
-- users can:
+- Users can:
   - check out books
   - reserve books
   - check in books
@@ -40,7 +40,7 @@ by Zach Baylin, Eric Miller, and Ohad Rau
   - find books on the map
   - get more information about the book from Google Books
   - report bugs
-- adminsitrators can:
+- Administrators can:
   - customize the name of the library
   - provide a custom map
   - change the checkout duration
@@ -132,7 +132,7 @@ Even though **bibliotech** was built to be as robust as possible, bugs are still
 All of this data is serialized and kept on the users phone.
 
 ### Administrator Interface
-Since all **bibliotech** instances report to a central server, we designed a user interface for the adminstrator to oversee the operations of the library.
+Since all **bibliotech** instances report to a central server, we designed a user interface for the administrator to oversee the operations of the library.
 
 You can view a demo interface [here](http://bibliotech.duckdns.org)
 
