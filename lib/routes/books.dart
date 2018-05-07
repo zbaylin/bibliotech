@@ -81,7 +81,6 @@ Future<Stream<Book>> getBooksWithDewey(int range) async {
 Future<Map> getFromGoogleBooks(Book book) async {
   final response = await http.get("https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}");
   final json = JSON.decode(response.body);
-  
   return json;
 }
 
@@ -137,7 +136,6 @@ Future<Book> getBook(String isbn) async {
   if (json == null) {
     return null;
   } else {
-    print(response.body);
     return new Book.fromJson(json);
   }
 }
