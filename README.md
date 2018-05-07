@@ -53,7 +53,7 @@ by Zach Baylin, Eric Miller, and Ohad Rau
 *\*phew\** That's a lot.
 
 ## User Functions
-### Checking In, Out and Reserving Books
+### Checking In, Checking Out, and Reserving Books
 Checking out a book is as simple for a user as clicking its entry in the Library Book List. Here, the app will check if the user has the book, and if the book is in stock.
 
 <img src="/demo/check_out.gif?raw=true" width="200px">
