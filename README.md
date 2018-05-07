@@ -8,7 +8,7 @@ by Zach Baylin, Eric Miller, and Ohad Rau
 
 - [Main Features](#main-features)
   - [User Functions](#user-functions)
-    - [Checking In, Out and Reserving Books](#checking-in-out-and-reserving-books)
+    - [Checking In, Checking Out and Reserving Books](#checking-in-out-and-reserving-books)
     - [Scanning Books](#scanning-books)
     - [Searching Books](#searching-books)
     - [Social Media](#social-media)
@@ -48,7 +48,6 @@ by Zach Baylin, Eric Miller, and Ohad Rau
     - manage the stock of inventory
     - be alerted of bug reports/book requests
     - add new books to the inventory
-    - manage users
 
 *\*phew\** That's a lot.
 
@@ -86,6 +85,8 @@ They can also hit the **[TWEET]** button to share their own thoughts about the b
 
 Want to share on something other than Twitter? **bibliotech**'s built in share function interfaces with all other shareable apps on your phone, such as Facebook, Snapchat, SMS, and others.
 
+<img src="/demo/share.gif?raw=true" width="200px">
+
 ### Map
 What good is a library app if the user can't find the book? **bibliotech** displays and easy to read, interactive map to the user.
 
@@ -101,8 +102,12 @@ Each individual book can also be located on the map using the **[Find On Map]** 
 
 On a book's info page, the user is already presented with basic information pulled from the Google Books API, such as average rating, description, etc. If the user wants to see more about the book, or purchase a copy of their own, they just have to click the **[MORE INFO]** button at the bottom of the Google Books Info panel.
 
+<img src="/demo/google_books.gif?raw=true" width="200px">
+
 ### Bug Reporting
 Even though **bibliotech** was built to be as robust as possible, bugs are still inevitable. In the event that a user finds a bug, all they have to do is use the provided bug reporting dialog found in the navigation drawer.
+
+<img src="/demo/bug_reporting.gif?raw=true" width="200px">
 
 ## Admin Functions
 ### Customization
