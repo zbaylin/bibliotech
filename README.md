@@ -8,7 +8,7 @@ by Zach Baylin, Eric Miller, and Ohad Rau
 
 - [Main Features](#main-features)
   - [User Functions](#user-functions)
-    - [Checking In, Checking Out and Reserving Books](#checking-in-out-and-reserving-books)
+    - [Checking In, Checking Out, and Reserving Books](#checking-in-checking-out-and-reserving-books)
     - [Scanning Books](#scanning-books)
     - [Searching Books](#searching-books)
     - [Social Media](#social-media)
@@ -138,7 +138,7 @@ You can view a demo interface [here](http://bibliotech.duckdns.org)
 
 #### Book Management
 All books and stock are the first items seen on the web interface.
-Here the admininstrator can review the stock of books, add stock to a book, and add a book to the stock. All is done through an intuitive, easy to use HTML5 based interface.
+Here the administrator can review the stock of books, add stock to a book, and add a book to the stock. All is done through an intuitive, easy to use HTML5 based interface.
 
 <img src="/demo/manage_books.png?raw=true" width="350px">
 
