@@ -13,8 +13,6 @@ cacheConfig() async {
   File configFile = new File("${appDocDir.path}/config.json");
   // Read in the current config.json and parse it
   Map json = JSON.decode(await configFile.readAsString());
-  // Set the user key in the JSON to the one stored in memory
-  json['goodreads']['user_key'] = config.goodreads['userKey'];
   // Write the new JSON object asynchronously to the file
   await configFile.writeAsString(JSON.encode(json));
 }

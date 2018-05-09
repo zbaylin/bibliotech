@@ -16,5 +16,3 @@ String username;
 int checkoutDuration;
 // The Twitter API keys
 Map twitter;
-// The Goodreads API keys
-Map goodreads;

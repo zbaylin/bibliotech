@@ -79,6 +79,7 @@ class BookListState extends State<BookList> {
 
   onRefresh(BuildContext context) async {
     Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("List refreshed"),));
+    setState(() => null);
   }
 
   Future<Stream> setFuture() {
