@@ -8,7 +8,7 @@ by Zach Baylin, Eric Miller, and Ohad Rau
 
 - [Main Features](#main-features)
   - [User Functions](#user-functions)
-    - [Checking In, Checking Out, and Reserving Books](#checking-in-checking-out-and-reserving-books)
+    - [Checking In, Checking Out, and Reserving Books](#checking-in--checking-out--and-reserving-books)
     - [Scanning Books](#scanning-books)
     - [Searching Books](#searching-books)
     - [Social Media](#social-media)
@@ -19,12 +19,18 @@ by Zach Baylin, Eric Miller, and Ohad Rau
     - [Customization](#customization)
     - [Administrator Interface](#administrator-interface)
       - [Book Management](#book-management)
-      - [Bug/Request Management](#bugrequest-management)
+      - [Bug/Request Management](#bug-request-management)
 - [Technical Information](#technical-information)
   - [Architecture](#architecture)
     - [Model](#model)
     - [View](#view)
     - [Controller](#controller)
+- [Installing](#installing)
+  - [Android](#android)
+  - [iOS](#ios)
+    - [Testflight](#testflight)
+    - [XCode](#xcode)
+
 # Main Features
 
 **bibliotech** was designed to meet the following requirements
