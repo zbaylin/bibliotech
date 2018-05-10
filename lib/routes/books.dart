@@ -5,7 +5,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/utils/config.dart';
-import 'package:twitter/twitter.dart';
+import 'package:bibliotech/utils/twitter.dart';
 
 main() async {
   config.hostname = "http://bibliotech.duckdns.org";
@@ -89,9 +89,9 @@ Future<Map> getFromGoogleBooksByISBN(String isbn) async {
 }
 
 Future<List> getFromTwitter(Book book) async {
-  Twitter twitter = new Twitter(config.twitter['consumer_key'], config.twitter['consumer_secret'], config.twitter['access_key'], config.twitter['access_secret']);
-  final response = await twitter.request("GET", "search/tweets.json?q=${Uri.encodeComponent(book.title + " " + book.author)}");
-  final json = JSON.decode(response.body);
+  TwitterApi twitter = new TwitterApi(config.twitter['consumer_key'], config.twitter['consumer_secret'], config.twitter['access_key'], config.twitter['access_secret']);
+  final response = await twitter.search(book);
+  final json = JSON.decode(response);
   return json['statuses'];
 }
 
