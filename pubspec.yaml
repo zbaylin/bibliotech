@@ -41,6 +41,7 @@ flutter:
     - assets/logo.png
     - assets/logo-white.png
     - assets/wood-square.png
+    - demo/icon.png
 
     - assets/map/000.png
     - assets/map/100.png

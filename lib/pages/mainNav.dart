@@ -24,31 +24,40 @@ class MainNavState extends State<MainNav> {
   // This controller can be used to programmatically set the current displayed page
   PageController _pageController;
 
+  // Creates the basic elements of the navbar, and all the pages within it
   SearchBar searchBar;
   BookList bookList;
   LibraryMap map;
   BookList shelf;
 
+  // Creates a text controller for submitting bugs
   TextEditingController bugController = new TextEditingController();
 
+  // Current page for the mainNav
+  // Changes with button press
   Widget _currentPage;
   
   @override
   Widget build(BuildContext context) {
+    // Prefer that the app be operated while in portrait mode
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp
     ]);
     return new Scaffold(
+      // Integrate the [SearchBar]
       appBar: searchBar.build(context),
       drawer: new Drawer(
         child: new ListView (
           children: <Widget>[
+            // Show a user info panel at the top of the drawer
             new UserAccountsDrawerHeader (
+              // Show the current username
               accountName: new Text("${config.username}"),
-              currentAccountPicture: new CircleAvatar(
-                child: new Text(config.username[0]),
-              ),
+              // Displays the icon of the app (to fulfill the requirements)
+              currentAccountPicture: new Image.asset("demo/icon.png"),
+              // Shows the name of the school
               accountEmail: new Text("${config.schoolName}"),
+              // Fill the back of the panel with an image of a library
               decoration: new BoxDecoration(
                 image: new DecorationImage(
                   image: new AssetImage('assets/acct-background.jpg'),
@@ -56,6 +65,8 @@ class MainNavState extends State<MainNav> {
                 )
               ),
             ),
+
+            // For all these [ListTile] widgets, they switch the screen to the basic elements of the app 
             new ListTile(
               title: new Text("Library"),
               trailing: new Icon(Icons.book),
@@ -86,6 +97,8 @@ class MainNavState extends State<MainNav> {
               onTap: () async => await scanner.scan(context)
             ),
             new Divider(),
+
+            // Allows the user to report a bug to the media specialist
             new ListTile(
               title: new Text("Report a Bug"),
               trailing: new Icon(Icons.bug_report),
@@ -117,6 +130,7 @@ class MainNavState extends State<MainNav> {
                 );
               },
             ),
+            // Logs the user out of the app
             new ListTile(
               title: new Text("Log Out"),
               trailing: new Icon(Icons.exit_to_app),
@@ -125,6 +139,7 @@ class MainNavState extends State<MainNav> {
           ]
         )
       ),
+      // Sets the main widget of the nav to the current page
       body: _currentPage
     );
   }
@@ -137,10 +152,11 @@ class MainNavState extends State<MainNav> {
   @override
   void initState() {
     super.initState();
-    _pageController = new PageController();
+    // Creates a new [SearchBar] that nests a standard [AppBar] inside it
     searchBar = new SearchBar(
       inBar: false,
       setState: setState,
+      // When the user searches a string, open a new [BookList] with type Search
       onSubmitted: (search) => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new Scaffold(
         appBar: new AppBar(
           title: new Text("Search: $search"),

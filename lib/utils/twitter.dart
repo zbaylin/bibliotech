@@ -20,13 +20,7 @@ class TwitterApi {
     _sigHasher = new Hmac(sha1, bytes);
   }
 
-  /// Sends a tweet with the supplied text and returns the response from the Twitter API.
-  Future<String> tweet(String text) {
-    var data = {"status": text, "trim_user": "1"};
-
-    return _callApi("POST", "statuses/update.json", data);
-  }
-
+  // Searches a book and its author on Twitter
   Future<String> search(Book book) {
     var data = {"q": book.title + " " + book.author};
     

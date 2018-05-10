@@ -19,14 +19,17 @@ class LogInPageState extends State<LogInPage> {
     return new Scaffold(
       appBar: new AppBar(title: new Text("Bibliotech: Log In"),),
       body: new Container(
+        // Decorates the background with an image of a library
         decoration: new BoxDecoration(
           image: new DecorationImage(
             image: new AssetImage("assets/login-background.jpg"),
             fit: BoxFit.cover
           )
         ),
+        // Establishes a new column with all the login elements
         child: Column(
           children: <Widget>[
+            // Shows our logo (to fulfill requirement)
             new Padding(
               padding: EdgeInsets.all(20.0),
               child: new Image.asset('assets/logo-white.png'),
@@ -35,6 +38,7 @@ class LogInPageState extends State<LogInPage> {
               padding: const EdgeInsets.only(left:12.0, right: 12.0),
               child: new Text("Welcome to Bibliotech. Please choose a unique username to begin.", textAlign: TextAlign.center, style: new TextStyle(color: Colors.white, fontSize: 20.0),),
             ),
+            // Text form for logging in
             new Padding(
               padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 8.0),
               child: new TextField(
@@ -62,6 +66,7 @@ class LogInPageState extends State<LogInPage> {
     );
   }
 
+  // Tests the username on the server and then serialize it in the config file, which is personalized to the user.
   submitUsername() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String defaultConfig = await rootBundle.loadString('config.json');
