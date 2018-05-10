@@ -15,6 +15,11 @@ class LogInPageState extends State<LogInPage> {
   TextEditingController usernameController = new TextEditingController();
 
   @override
+  //Creates a form for the user to login, if they are not already logged in.
+  //If the user enters a username that is not yet in the database, the server
+  //creates a new username and instantiates a new empty shelf for the user. If
+  //the user enters in a username that already exists, the server returns the
+  //corresponding shelf items.
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(title: new Text("Bibliotech: Log In"),),
