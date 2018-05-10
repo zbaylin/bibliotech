@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
-import 'package:local_notifications/local_notifications.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_notifications/initialization_settings.dart';
+import 'package:flutter_local_notifications/notification_details.dart';
+import 'package:flutter_local_notifications/platform_specifics/android/initialization_settings_android.dart';
+import 'package:flutter_local_notifications/platform_specifics/android/notification_details_android.dart';
+import 'package:flutter_local_notifications/platform_specifics/ios/initialization_settings_ios.dart';
+import 'package:flutter_local_notifications/platform_specifics/ios/notification_details_ios.dart';
+import 'dart:math';
 import 'package:bibliotech/models/book.dart';
 import 'package:bibliotech/config.dart' as config;
 import 'package:bibliotech/components/cards.dart';
@@ -25,56 +32,57 @@ class BookInfo extends StatefulWidget {
 
 class BookInfoState extends State<BookInfo> {
   Book book;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  int notificationID;
 
   @override
   void initState() {
     super.initState();
     book = widget.book;
+
+    // Creates an instance of the notification plugin
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    // Enables platform-specific code for Android
+    InitializationSettingsAndroid initializationSettingsAndroid = new InitializationSettingsAndroid('notification_icon');
+    // Enables platform-specific code for iOS
+    InitializationSettingsIOS initializationSettingsIOS = new InitializationSettingsIOS();
+    // Sets the options for the notifications
+    InitializationSettings initializationSettings = new InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+    // Initializes the plugin to display notifications
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, selectNotification: handleNotification);
+    // Generates a random ID number for the notification
+    notificationID = new Random().nextInt(100);
   }
 
-  remindMeBeforeDue() {
-    // This will remind the patron n-1 days after they checkout the book to return it
-    new Future.delayed(new Duration(seconds: config.checkoutDuration-1), () async {
-      // Fix for Android 8.0+ which requires all new notifications to be sent through a channel
-      final channel = const AndroidNotificationChannel(
-        id: 'check_in_notification',
-        name: 'Default',
-        description: 'Grant this app the ability to remind ',
-      );
-      await LocalNotifications.createAndroidNotificationChannel(channel:  channel);
-      LocalNotifications.createNotification(
-        title: "${book.title} is due soon!",
-        content: "If it has not been already, ${book.title} must be returned within 24 hours, or by ${DateTime.now().add(new Duration(days: 5))}",
-        id: 0,
-        onNotificationClick: new NotificationAction(
-          actionText: "DISMISS",
-          callback: handleNotificationAction,
-          payload: "DISMISS"
-        ),
-        actions: [
-          new NotificationAction(
-            actionText: "RETURN",
-            callback: handleNotificationAction,
-            payload: "RETURN",
-            launchesApp: false
-          )
-        ],
-        androidSettings: new AndroidSettings(
-          channel: channel,
-        )
-      );
-    });
-  }
-
-  handleNotificationAction(String action) {
-    switch (action) {
+  Future handleNotification(String payload) async {
+    switch (payload) {
+      // If the Payload is return, dismiss the notification and return the book.
       case "RETURN":
+        flutterLocalNotificationsPlugin.cancel(notificationID);
         checkIn(book);
-        LocalNotifications.removeNotification(0);
         break;
+      // Else - dismiss the notification
       default:
-        LocalNotifications.removeNotification(0);
+        flutterLocalNotificationsPlugin.cancel(notificationID);
     }
+  }
+
+  remindMeBeforeDue() async {
+    // Set the schedule date to be when the book is due
+    var scheduledNotificationDateTime = new DateTime.now().add(new Duration(days: config.checkoutDuration));
+    // Creates an Android Notification Channel (required for Android 8.0+)
+    NotificationDetailsAndroid androidPlatformChannelSpecifics = new NotificationDetailsAndroid("DEFAULT", "Reminders", 'Reminds you when a book is overdue', importance: Importance.Max, priority: Priority.Max);
+    // Enables the notification for iOS
+    NotificationDetailsIOS iOSPlatformChannelSpecifics = new NotificationDetailsIOS();
+    NotificationDetails platformChannelSpecifics = new NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    // Schedules the notification with the RETURN payload
+    await flutterLocalNotificationsPlugin.schedule(
+        notificationID,
+        '${book.title} needs to be checked in soon!',
+        "Tap here to check in ${book.title}",
+        scheduledNotificationDateTime,
+        platformChannelSpecifics,
+        payload: "RETURN");
   }
 
   @override
@@ -122,7 +130,7 @@ class BookInfoState extends State<BookInfo> {
                           case ConnectionState.waiting:
                             return new CircularProgressIndicator();
                             break;
-                          // If it has finished (meaning it has acquired the bool), 
+                          // If it has finished (meaning it has acquired the boolean), 
                           default:
                             // Tests if the person has the book
                             // N.B. the data of the snapshot is a boolean

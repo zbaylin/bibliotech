@@ -86,7 +86,6 @@ class TwitterApi {
       ..contentType = new ContentType("application", "x-www-form-urlencoded",
           charset: "utf-8")
       ..add("Authorization", oAuthHeader);
-    print("**************\n" + url.toString() + "\n" + request.headers.toString() + "\n***************");
     final response = await request.close().whenComplete(http.close);
     return response.transform(UTF8.decoder).join("");
   }
