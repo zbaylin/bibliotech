@@ -196,3 +196,23 @@ Future<Map> getFromGoogleBooks(Book book) async {
 }
 ```
 
+# Installing
+## Android
+To install on Android, you first must enable the ability to install apps from untrusted sources. You can find out how to do this [here](https://www.applivery.com/docs/troubleshooting/android-unknown-sources)
+
+Next, follow these directions:
+
+1. Go to the Releases page on this repository by [clicking here](https://github.com/zbaylin/bibliotech/releases).
+2. Download the most recent `app-release.apk`
+3. Open the file on your phone
+4. Install the app
+
+## iOS
+To install on iOS, you have one of two options: TestFlight or XCode.
+### Testflight
+If you would like to be added as a beta tester for **bibliotech** on iOS, please complete the [sign-up survey](https://goo.gl/forms/4crRaxPMCAb2LzXe2). You will be sent an email with information on how to download and install **bibliotech** from Testflight.
+
+### XCode
+To use XCode, clone the repository on a Mac with XCode installed. Open the file `ios/Runner.xcworkspace`. Run the file in XCode, either with an iPhone or iPad plugged in, or with the iOS Simulator running.
+
+
