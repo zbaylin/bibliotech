@@ -81,7 +81,7 @@ If a user wants to share that awesome book they just read from their **bibliotec
 **bibliotech** uses the Twitter API (API keys can be found in the configuration file) to search Tweets that reference the book mentioned.
 
 
-If a use taps on one of these Tweets, they will be brought to that Tweet's page in either the Twitter app (if it's installed), or the phone's default web browser.
+If a user taps on one of these Tweets, they will be brought to that Tweet's page in either the Twitter app (if it's installed), or the phone's default web browser.
 
 
 They can also hit the **[TWEET]** button to share their own thoughts about the book, with a template Tweet being generated for them.
@@ -94,7 +94,7 @@ Want to share on something other than Twitter? **bibliotech**'s built in share f
 <img src="/demo/share.gif?raw=true" width="200px">
 
 ### Map
-What good is a library app if the user can't find the book? **bibliotech** displays and easy to read, interactive map to the user.
+What good is a library app if the user can't find the book? **bibliotech** displays an easy to read, interactive map to the user.
 
 <img src="/demo/view_map.gif?raw=true" width="200px">
 
