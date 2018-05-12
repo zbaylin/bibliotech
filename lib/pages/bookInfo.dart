@@ -217,16 +217,22 @@ class BookInfoState extends State<BookInfo> {
                 ),
               ),
               new Divider(),
+              // Displays the title of the book
               new Text(book.title, textAlign: TextAlign.center, style: new TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
+              // Displays the author of the book
               new Text(book.author, textAlign: TextAlign.center, style: new TextStyle(fontSize: 18.0)),
+              // Builds [TitledCard] widgets (see components/cards.dart) with the various information panels
+              // (see components/googleBooksPanel.dart)
               new TitledCard(
                 title: "Info",
                 child: new GoogleBooksPanel(book)
               ),
+              // (see components/stockPanel.dart)
               new TitledCard(
                 title: "Stock",
                 child: new StockPanel(book),
               ),
+              // (see components/twitterPanel.dart and utils/twitter.dart)
               new TitledCard(
                 title: "Twitter",
                 child: new TwitterPanel(book),
