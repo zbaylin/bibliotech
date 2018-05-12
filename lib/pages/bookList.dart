@@ -3,14 +3,21 @@ import 'dart:async';
 import 'package:bibliotech/components/bookItem.dart';
 import 'package:bibliotech/routes/books.dart';
 
+// Specifies what type of Books are in the list. This determines what information
+// will be displayed for the user while scrolling through the books.
 enum BookListType {
+  // For use on the My Shelf page -- show the due date of the book
   SHELF,
+  // For use on the library page -- show the number in stock
   LIBRARY,
+  // For use on the search page
   SEARCH,
+  // For use on the map's Dewey Decimal group list of books
   DEWEY
 }
 
 class BookList extends StatefulWidget {
+  // Optionally take in a search term or dewey decimal range that was used to find this list
   BookList(this.listType, {this.searchTerm, this.deweyRange});
 
   final BookListType listType;
