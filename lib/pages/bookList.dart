@@ -6,13 +6,18 @@ import 'package:bibliotech/routes/books.dart';
 // Since the same widget is being used for multiple display types, we have an Enumerated Type
 // to change what elements are displayed, etc.
 enum BookListType {
+  // For use on the My Shelf page -- show the due date of the book
   SHELF,
+  // For use on the library page -- show the number in stock
   LIBRARY,
+  // For use on the search page
   SEARCH,
+  // For use on the map's Dewey Decimal group list of books
   DEWEY
 }
 
 class BookList extends StatefulWidget {
+  // Optionally take in a search term or dewey decimal range that was used to find this list
   BookList(this.listType, {this.searchTerm, this.deweyRange});
 
   // This is a required parameter, else the widget doesnt know what to display
